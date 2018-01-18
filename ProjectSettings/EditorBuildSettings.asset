@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Main/__Scenes/Levels/Scene_Menu.unity
+    guid: 8beb578aaf5797840878368cc416b7f7
+  - enabled: 0
+    path: Assets/Main/__Scenes/Levels/Spikey Cavern.unity
+    guid: 68f8c99f7f255324a9c4b692f3c50f31
+  - enabled: 0
+    path: Assets/Main/__Scenes/Scene_Pablo.unity
+    guid: 1cb03e0d0bc4ec94698af773d1015c52
+  - enabled: 0
+    path: Assets/Main/__Scenes/Scene_Josefina.unity
+    guid: 27877353c6c4fdf49852f08c4530b999
+  - enabled: 1
+    path: Assets/Main/__Scenes/Scene_Elton.unity
+    guid: 6e0249c74e78ab84c875452ac7e6cf0f
+  - enabled: 0
+    path: Assets/Main/__Scenes/Scene_Fredrik.unity
+    guid: 08f55ac5b36fd014087ffc1c90ee1719
+  - enabled: 1
+    path: Assets/Main/__Scenes/Levels/Mayan Tempel.unity
+    guid: 04e4ae2050c6b564c8adc61116fce9f2
+  - enabled: 0
+    path: Assets/Main/__Scenes/test_SpawningInMenu.unity
+    guid: 0076e47beccbb5d4f9e638affbc77abc
+  - enabled: 1
+    path: Assets/Main/__Scenes/Levels/Spikey Cavern_TestVersion2.unity
+    guid: 57ede2dc9930cad4592d963d38e9503a
+  - enabled: 0
+    path: Assets/Main/__Scenes/test_LevelToGoTo.unity
+    guid: b454c7c3a0973254b88bdcb58a8af814
+  - enabled: 1
+    path: Assets/Main/__Scenes/Levels/Icicle stuffs.unity
+    guid: 6007df8d5dd62aa40bebdf4e06e7f716

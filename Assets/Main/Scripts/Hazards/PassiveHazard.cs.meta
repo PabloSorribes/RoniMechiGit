@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: ac83ee0341c6aa847b21ecab16143885
+timeCreated: 1513075286
+licenseType: Pro
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - splashParticleOne: {fileID: 198473296860074752, guid: 03fb1b0eb05247649b54e9cfaa132aea,
+      type: 2}
+  - splashParticleTwo: {fileID: 198345304455395664, guid: 886d9c1d8adb5d547a203c71b46fd2f9,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

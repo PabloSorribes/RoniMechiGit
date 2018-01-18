@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 855d1a806b2d4a045a41de4f9ebca1c8
+timeCreated: 1511949613
+licenseType: Pro
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - ammoSliderPrefab: {fileID: 1039292866021344, guid: 2b9ff61012344a540bae7e071b5c9f5f,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
