@@ -12,8 +12,6 @@ public class NewPlayerController : MonoBehaviour {
     [HideInInspector] public Shooting myShooter;
     [HideInInspector] public Rigidbody playerRigidbody;
     private Animator playerAnimator;
-	public Material[] playerMaterials;
-	public Renderer theBodyColor;
 
     [HideInInspector] public string currentPlayer;
 
@@ -23,6 +21,7 @@ public class NewPlayerController : MonoBehaviour {
 
     public bool canMove = true;
     [HideInInspector] public bool isGrounded;
+	public Renderer theBodyColor;
 
     [Header("--- MOVEMENT ---")]
     public float moveSpeed;
@@ -39,6 +38,12 @@ public class NewPlayerController : MonoBehaviour {
     //Used in the BetterFall-function
     [SerializeField] private float fallMultiplier = 3f;
     [SerializeField] private float lowJumpMultiplier = 2f;
+
+
+	[Header("---PARTICLES---")]
+	public ParticleSystem ps_spawnExplosion;
+	public ParticleSystem ps_deathExplosion;
+	public ParticleSystem ps_deathPlasma;
 
 
 	/// <summary>
@@ -64,6 +69,8 @@ public class NewPlayerController : MonoBehaviour {
 
 		InitializeSounds();
 		PlayStopSound(a_spawn, true);
+
+		SpawnParticles();
 	}
 
 	private void ChangePlayerColor() {
@@ -121,6 +128,13 @@ public class NewPlayerController : MonoBehaviour {
 			p_fmodComponent.Stop();
 		}
 	}
+
+	void SpawnParticles() {
+
+		Destroy(Instantiate(ps_spawnExplosion.gameObject, this.transform.position, Quaternion.FromToRotation(Vector3.forward, Vector3.up)) as GameObject, 1.5f);
+	}
+
+
 
 	// Update is called once per frame
 	void Update() {
@@ -413,7 +427,15 @@ public class NewPlayerController : MonoBehaviour {
 
 	private void OnDestroy() {
 
+		DeathParticles();
+
 		PlayStopSound(a_runningLoop, true);
 		PlayStopSound(a_death, true);
+	}
+
+	void DeathParticles() {
+
+		Destroy(Instantiate(ps_deathExplosion.gameObject, this.transform.position, Quaternion.FromToRotation(Vector3.forward, Vector3.up)) as GameObject, 2f);
+		Destroy(Instantiate(ps_deathPlasma.gameObject, this.transform.position, Quaternion.FromToRotation(Vector3.forward, Vector3.up)) as GameObject, 2f);
 	}
 }

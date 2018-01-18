@@ -27,6 +27,8 @@ ehthumbs.db
 [Bb]uild
 sysinfo.txt
 *.stackdump
+Temp\
+Temp\*
 
 # FMOD Generated Files
 /Assets/FMODAssets/*

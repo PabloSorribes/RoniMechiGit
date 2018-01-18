@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Main/__Scenes/test_SpawningInMenu.unity
+- path: Assets/Main/__Scenes/Levels/Scene_Menu.unity
   isLoaded: 1
   isActive: 1
