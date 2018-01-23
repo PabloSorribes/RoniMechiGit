@@ -28,6 +28,9 @@ public class GameManagerMenu : MonoBehaviour {
 		gsManager = GameStateManager.GetInstance();
 		gameManager = GameManager.GetInstance();
 
+		if (gsManager.currentGameState == GameStateManager.GameState.inGame) {
+			Destroy(this);
+		}
 
 		//Just automatically add x amount of players on start.
 		SpawnPlayersOnStart();
