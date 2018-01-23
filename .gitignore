@@ -29,6 +29,8 @@ sysinfo.txt
 *.stackdump
 Temp\
 Temp\*
+Library\
+Library\*
 
 # FMOD Generated Files
 /Assets/FMODAssets/*
