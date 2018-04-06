@@ -54,6 +54,7 @@ GameObject:
   - component: {fileID: 124282502423180114}
   - component: {fileID: 81406449055905524}
   - component: {fileID: 114488727470949874}
+  - component: {fileID: 114807552606123602}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -181,6 +182,18 @@ MonoBehaviour:
   AngleMax: 25
   AngleMin: 5
   offsetY: 5
+--- !u!114 &114807552606123602
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1760600089038132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profile: {fileID: 11400000, guid: 655e4cd9dde3b3e4e888ac5284f83a28, type: 2}
 --- !u!124 &124282502423180114
 Behaviour:
   m_ObjectHideFlags: 1
