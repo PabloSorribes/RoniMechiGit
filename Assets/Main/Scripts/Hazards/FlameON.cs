@@ -3,40 +3,60 @@ using UnityEngine;
 
 public class FlameON : MonoBehaviour
 {
-	private GameManager gameManager;
 	public ParticleSystem lavaEmitter;
-	private float time;
-	private float timeLeftToFlaming;
-	private float timeToPlayFlames = 2f;
-	bool playFlames = false;
-	public float emitterNumber;
 	private Collider flameCollider;
+
+	private float timeLeftToFlaming;
+	private bool playFlames = false;
+
+	private float time;
+	public float emitterNumber;
 
 	private FMODUnity.StudioEventEmitter a_fireLoop;
 
 	// Use this for initialization
 	private void Start()
 	{
-		gameManager = FindObjectOfType<GameManager>();
 		time = 0;
 		flameCollider = GetComponent<Collider>();
 		flameCollider.enabled = false;
 
+		InitializeAudio();
+
+		timeLeftToFlaming = GetTimeToPlayFlames();
+	}
+
+	private void InitializeAudio()
+	{
 		a_fireLoop = gameObject.AddComponent<FMODUnity.StudioEventEmitter>();
 		a_fireLoop.Event = "event:/hazard_flameOn";
+		a_fireLoop.Preload = true;
+	}
 
-		timeLeftToFlaming = timeToPlayFlames;
+	private float GetTimeToPlayFlames()
+	{
+		float timeToPlayFlames = Random.Range(4f, 8f);
+		return timeToPlayFlames;
 	}
 
 	// Update is called once per frame
 	private void Update()
 	{
 		timeLeftToFlaming -= Time.deltaTime;
-		print("Time to start flames: " + timeLeftToFlaming);
+		//print("Time to start flames: " + timeLeftToFlaming);
 		print("Play flames: " + playFlames);
-		if (timeLeftToFlaming <= 0f && !playFlames)
+		if (timeLeftToFlaming <= 0f)
 		{
-			StartCoroutine(PlayFlamesAndStopAfterTime(4f));
+			//play the particle effect. 
+			//Has to be in Update for it to look nice, since the particles aren't spawned correctly in the prefab. 
+			lavaEmitter.Play();
+
+			//Do once
+			if (!playFlames)
+			{
+				float randomInterval = Random.Range(3f, 5f);
+				StartCoroutine(PlayFlamesAndStopAfterTime(randomInterval));
+			}
 		}
 
 		//OldFunction();
@@ -49,7 +69,7 @@ public class FlameON : MonoBehaviour
 		StopPlayingFlames();
 	}
 
-	void StartPlayingFlames()
+	private void StartPlayingFlames()
 	{
 		print("Flame on!");
 
@@ -63,14 +83,13 @@ public class FlameON : MonoBehaviour
 
 		if (!a_fireLoop.IsPlaying())
 			a_fireLoop.Play();
-
 	}
 
-	void StopPlayingFlames()
+	private void StopPlayingFlames()
 	{
 		print("Stop flaming.");
 
-		timeLeftToFlaming = timeToPlayFlames;
+		timeLeftToFlaming = GetTimeToPlayFlames();
 		playFlames = false;
 
 		//when the interval has passed, disable the box collider so players aren't killed when the particles are inactive.
@@ -81,7 +100,7 @@ public class FlameON : MonoBehaviour
 		a_fireLoop.Stop();
 	}
 
-	void OldFunction()
+	private void OldFunction()
 	{
 		//The int time is counted by each lava emitter and depending on what number the emitter has, it will activate its collider and spawn fire at
 		//different intervals.
@@ -115,8 +134,6 @@ public class FlameON : MonoBehaviour
 		}
 
 		time++;
-		print("Start threshold: " + 500 * emitterNumber);
-		print("Time: " + time);
 	}
 
 	public void OnTriggerEnter(Collider p_collide)

@@ -32629,6 +32629,36 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 198468245678696276, guid: 2d53e712c8f5a0b4f9f3a239e9865872,
+        type: 2}
+      propertyPath: prewarm
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198468245678696276, guid: 2d53e712c8f5a0b4f9f3a239e9865872,
+        type: 2}
+      propertyPath: startDelay.scalar
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198468245678696276, guid: 2d53e712c8f5a0b4f9f3a239e9865872,
+        type: 2}
+      propertyPath: startDelay.maxCurve.m_Curve.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198468245678696276, guid: 2d53e712c8f5a0b4f9f3a239e9865872,
+        type: 2}
+      propertyPath: startDelay.maxCurve.m_Curve.Array.data[1].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198468245678696276, guid: 2d53e712c8f5a0b4f9f3a239e9865872,
+        type: 2}
+      propertyPath: randomSeed
+      value: 117375881
+      objectReference: {fileID: 0}
+    - target: {fileID: 198468245678696276, guid: 2d53e712c8f5a0b4f9f3a239e9865872,
+        type: 2}
+      propertyPath: looping
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2d53e712c8f5a0b4f9f3a239e9865872, type: 2}
   m_IsPrefabParent: 0
@@ -60090,12 +60120,12 @@ Prefab:
     - target: {fileID: 224273607819417240, guid: 774e018cfb7550a43a033cb971bf869c,
         type: 2}
       propertyPath: m_LocalPosition.x
-      value: 330.5
+      value: 321.5
       objectReference: {fileID: 0}
     - target: {fileID: 224273607819417240, guid: 774e018cfb7550a43a033cb971bf869c,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: 186
+      value: 181
       objectReference: {fileID: 0}
     - target: {fileID: 224273607819417240, guid: 774e018cfb7550a43a033cb971bf869c,
         type: 2}
