@@ -1,34 +1,35 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// IMPORTANT: This script can ONLY be in the Menu-scene, not in-game.
 /// </summary>
-public class GameManagerMenu : MonoBehaviour {
+public class GameManagerMenu : MonoBehaviour
+{
+	private GameManager gameManager;
+	private GameStateManager gsManager;
 
-	GameManager gameManager;
-	GameStateManager gsManager;
-
-	int counter = 0;
-	bool stopDoubleSpawning = true;
+	private int counter = 0;
+	private bool stopDoubleSpawning = true;
 
 	public enum AmountOfPlayersToSpawn { zero, one, two, three, four };
 	public AmountOfPlayersToSpawn amountOfPlayersToSpawn;
 
 	//Singleton
 	private static GameManagerMenu instance;
-	public static GameManagerMenu GetInstance() {
 
+	public static GameManagerMenu GetInstance()
+	{
 		return instance;
 	}
 
 	// Use this for initialization
-	void Start() {
+	private void Start()
+	{
 		gsManager = GameStateManager.GetInstance();
 		gameManager = GameManager.GetInstance();
 
-		if (gsManager.currentGameState == GameStateManager.GameState.inGame) {
+		if (gsManager.currentGameState == GameStateManager.GameState.inGame)
+		{
 			Destroy(this);
 		}
 
@@ -36,15 +37,18 @@ public class GameManagerMenu : MonoBehaviour {
 		SpawnPlayersOnStart();
 	}
 
-	//Intended for adding ONE player on Start in the Menu.
-	private void SpawnPlayersOnStart() {
-
-		for (int index = 0; index < (int)amountOfPlayersToSpawn; index++) {
-
+	/// <summary>
+	/// Intended for adding ONE player on Start in the Menu.
+	/// </summary>
+	private void SpawnPlayersOnStart()
+	{
+		for (int index = 0; index < (int)amountOfPlayersToSpawn; index++)
+		{
 			AddPlayer(index);
 		}
 
-		if (amountOfPlayersToSpawn == AmountOfPlayersToSpawn.zero) {
+		if (amountOfPlayersToSpawn == AmountOfPlayersToSpawn.zero)
+		{
 			//print("No players are spawned on Start");
 		}
 
@@ -52,19 +56,20 @@ public class GameManagerMenu : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void Update() {
-
+	private void Update()
+	{
 		//print("Stop Double-Spawning: " + stopDoubleSpawning);
 		//print("Counter: " + counter);
 
 		//If we are in the player selection menu, allow spawning of players
-		if (gsManager.currentMainMenuState == GameStateManager.MenuState.playerSelection) {
+		if (gsManager.currentMainMenuState == GameStateManager.MenuState.playerSelection)
+		{
 			GetPlayerInputAssignment();
 		}
 	}
 
-	private void GetPlayerInputAssignment() {
-
+	private void GetPlayerInputAssignment()
+	{
 		//Spawn new player in menu
 		if (Input.GetButtonDown("Jump_P1") || Input.GetKeyDown(KeyCode.Keypad1))
 			AddPlayer(0);
@@ -86,26 +91,29 @@ public class GameManagerMenu : MonoBehaviour {
 			RemovePlayer(3);
 	}
 
-	private void AddPlayer(int p_index) {
-
+	private void AddPlayer(int p_index)
+	{
 		//if () {
-
 		//}
 
-		//TODO: Make this operation unique for each player. 
-		if (counter == 0) {
+		//TODO: Make this operation unique for each player.
+		if (counter == 0)
+		{
 			stopDoubleSpawning = false;
 			counter++;
 		}
-		else if (counter > 0) {
+		else if (counter > 0)
+		{
 			stopDoubleSpawning = true;
 		}
 
-		if (stopDoubleSpawning) {
-
+		if (stopDoubleSpawning)
+		{
 			//Om index redan är tilldelat, hoppa ur funktionen.
-			foreach (var handler in gameManager.playerHandlers) {
-				if (handler.playerIndexRobert == p_index) {
+			foreach (var handler in gameManager.playerHandlers)
+			{
+				if (handler.playerIndexRobert == p_index)
+				{
 					return;
 				}
 			}
@@ -116,13 +124,12 @@ public class GameManagerMenu : MonoBehaviour {
 		gsManager.RegisterPlayer(p_index);
 	}
 
-	private void RemovePlayer(int p_index) {
-
-		counter = 0;	
+	private void RemovePlayer(int p_index)
+	{
+		counter = 0;
 
 		////Check if the index is valid.
 		//if (gsManager.joinedPlayersInt.Contains(gsManager.joinedPlayersInt[p_index])) {
-
 		gameManager.RemovePlayerHandler(p_index);
 		gsManager.UnRegisterPlayer(p_index);
 		//}
