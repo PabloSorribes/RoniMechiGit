@@ -20,7 +20,6 @@ public class GameManager : MonoBehaviour
 	public bool useRandomSpawnLocations;
 
 	private bool gameStarted;
-	private int timesUpdateGameStatusIsCalled = 0;
 
 	//Action for the GameUI to update the life bars.
 	public static event System.Action<GameManager> OnUpdateGameStatus;
