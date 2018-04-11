@@ -1049,23 +1049,6 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 662f8125e6659d6469665cda79fb18ae, type: 3}
   m_PrefabInternal: {fileID: 79102894}
---- !u!1 &81006049 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1282230920201194, guid: 70a384f172a62db49978db1b44129a7e,
-    type: 2}
-  m_PrefabInternal: {fileID: 2002437931}
---- !u!114 &81006053
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 81006049}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d967f0b42286bb46930849346e582ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim: {fileID: 0}
 --- !u!1001 &83013292
 Prefab:
   m_ObjectHideFlags: 0
@@ -29550,7 +29533,6 @@ GameObject:
   - component: {fileID: 1735060972}
   - component: {fileID: 1735060976}
   - component: {fileID: 1735060977}
-  - component: {fileID: 1735060978}
   - component: {fileID: 1735060979}
   - component: {fileID: 1735060980}
   m_Layer: 0
@@ -29647,18 +29629,6 @@ Skybox:
   m_GameObject: {fileID: 1735060971}
   m_Enabled: 1
   m_CustomSkybox: {fileID: 2100000, guid: 144d8bb5cb02ac34c9c1a7dcafc9d55b, type: 2}
---- !u!114 &1735060978
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1735060971}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d967f0b42286bb46930849346e582ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim: {fileID: 1735060976}
 --- !u!114 &1735060979
 MonoBehaviour:
   m_ObjectHideFlags: 0
