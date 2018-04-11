@@ -383,11 +383,11 @@ public class NewPlayerController : MonoBehaviour {
 		{
 			playerRigidbody.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.fixedDeltaTime;
 		}
-		//Reason of Removal: It added gravity to player 3 only.
-		//UPDATE: See if this works now.
-		//else if (playerRigidbody.velocity.y > 0 && CrossPlatformInputManager.GetButton("Jump" + currentPlayer)) {
-		//	playerRigidbody.velocity += Vector3.up * Physics.gravity.y * (lowJumpMultiplier - 1) * Time.fixedDeltaTime;
-		//}
+		//Add gravity to player.
+		else if (playerRigidbody.velocity.y > 0 && CrossPlatformInputManager.GetButton("Jump" + currentPlayer))
+		{
+			playerRigidbody.velocity += Vector3.up * Physics.gravity.y * (lowJumpMultiplier - 1) * Time.fixedDeltaTime;
+		}
 	}
 
 	public void DebugKeyboardInput() {
