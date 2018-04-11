@@ -22,6 +22,19 @@ public class GameManagerMenu : MonoBehaviour
 		return instance;
 	}
 
+	private void Awake()
+	{
+		//- Only keep one instance of this object in the game.
+		if (instance == null)
+		{
+			instance = this;
+		}
+		else if (FindObjectOfType<GameStateManager>().gameObject != this.gameObject)
+		{
+			Destroy(FindObjectOfType<GameStateManager>().gameObject);
+		}
+	}
+
 	// Use this for initialization
 	private void Start()
 	{
