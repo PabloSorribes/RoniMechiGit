@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 65420722266982068}
   - component: {fileID: 114310521649537336}
   m_Layer: 0
-  m_Name: Lava emitter left
+  m_Name: FlameThrower_Left
   m_TagString: Hazard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -189,9 +189,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lavaEmitter: {fileID: 198370047519027324}
-  time: 0
   emitterNumber: 2
-  isFlame: 1
 --- !u!198 &198182624239044722
 ParticleSystem:
   m_ObjectHideFlags: 1
