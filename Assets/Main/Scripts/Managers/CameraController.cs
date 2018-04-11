@@ -8,29 +8,29 @@ public class CameraController : MonoBehaviour {
 
 	private GameManager gameMan;
 
-    //Reference to all the players in the level
-    [HideInInspector] public List<NewPlayerController> playerControllers;
-    private FocusLevel focusLevel;
+	//Reference to all the players in the level
+	[HideInInspector] public List<NewPlayerController> playerControllers;
+	private FocusLevel focusLevel;
 
-    public float DepthUpdateSpeed = 5f;
-    public float AngleUpdateSpeed = 7f;
-    public float PositionUpdateSpeed = 5f;
+	public float DepthUpdateSpeed = 5f;
+	public float AngleUpdateSpeed = 7f;
+	public float PositionUpdateSpeed = 5f;
 
-    public float DepthMax = -25f;
-    public float DepthMin = -25f;
+	public float DepthMax = -25f;
+	public float DepthMin = -25f;
 
-    public float AngleMax = 0f;
-    public float AngleMin = 0f;
+	public float AngleMax = 0f;
+	public float AngleMin = 0f;
 
-    private float CameraEulerX;
-    private Vector3 CameraPosition;
+	private float CameraEulerX;
+	private Vector3 CameraPosition;
 
 	public float offsetY = 30f;
 
-    // Use this for initialization
-    void Start() {
+	// Use this for initialization
+	void Start() {
 
-        focusLevel = FindObjectOfType<FocusLevel>();
+		focusLevel = FindObjectOfType<FocusLevel>();
 
 		gameMan = GameManager.GetInstance();
 
@@ -39,8 +39,8 @@ public class CameraController : MonoBehaviour {
 	}
 
 
-    // Update is called once per frame
-    private void LateUpdate() {
+	// Update is called once per frame
+	private void LateUpdate() {
 
 		//print("Amount of players in Camera List: " + playerControllers.Count);
 
@@ -55,7 +55,7 @@ public class CameraController : MonoBehaviour {
 
 			CameraPosition = new Vector3(focusLevel.transform.position.x, focusLevel.transform.position.y, depth);
 		}
-    }
+	}
 
 	//Is called from UpdateGameStatus() in GameManager
 	public void UpdatePlayersInList(PlayerHandler p_playerHandler) {
@@ -80,62 +80,62 @@ public class CameraController : MonoBehaviour {
 		}
 	}
 
-    private void CalculateCameraLocations() {
+	private void CalculateCameraLocations() {
 
-        //Initialize the Vectors
-        Vector3 averageCenter = Vector3.zero;       //Average center of all the players
-        Vector3 totalPositions = Vector3.zero;      //The sum of all the positions of our players
-        Bounds playerBounds = new Bounds();
+		//Initialize the Vectors
+		Vector3 averageCenter = Vector3.zero;       //Average center of all the players
+		Vector3 totalPositions = Vector3.zero;      //The sum of all the positions of our players
+		Bounds playerBounds = new Bounds();
 
-        for (int _index = 0; _index < playerControllers.Count; _index++) {
+		for (int _index = 0; _index < playerControllers.Count; _index++) {
 
-            Vector3 playerPosition = playerControllers[_index].transform.position;
+			Vector3 playerPosition = playerControllers[_index].transform.position;
 
-            //Check if the player is within the focus bounds.
-            if (!focusLevel.focusBounds.Contains(playerPosition)) {
+			//Check if the player is within the focus bounds.
+			if (!focusLevel.focusBounds.Contains(playerPosition)) {
 
-                float playerX = Mathf.Clamp(playerPosition.x, focusLevel.focusBounds.min.x, focusLevel.focusBounds.max.x);
-                float playerY = Mathf.Clamp(playerPosition.y, focusLevel.focusBounds.min.y, focusLevel.focusBounds.max.y);
-                float playerZ = Mathf.Clamp(playerPosition.z, focusLevel.focusBounds.min.z, focusLevel.focusBounds.max.z);
-                playerPosition = new Vector3(playerX, playerY, playerZ);
-            }
-            totalPositions += playerPosition;
-            playerBounds.Encapsulate(playerPosition);
-        }
-        
-        averageCenter = (totalPositions / playerControllers.Count);
+				float playerX = Mathf.Clamp(playerPosition.x, focusLevel.focusBounds.min.x, focusLevel.focusBounds.max.x);
+				float playerY = Mathf.Clamp(playerPosition.y, focusLevel.focusBounds.min.y, focusLevel.focusBounds.max.y);
+				float playerZ = Mathf.Clamp(playerPosition.z, focusLevel.focusBounds.min.z, focusLevel.focusBounds.max.z);
+				playerPosition = new Vector3(playerX, playerY, playerZ);
+			}
+			totalPositions += playerPosition;
+			playerBounds.Encapsulate(playerPosition);
+		}
+		
+		averageCenter = (totalPositions / playerControllers.Count);
 
-        float extents = (playerBounds.extents.x + playerBounds.extents.y + playerBounds.extents.z);
-        float lerpPercent = Mathf.InverseLerp(0, (focusLevel.halfXBounds + focusLevel.halfYBounds) / 2, extents);
+		float extents = (playerBounds.extents.x + playerBounds.extents.y + playerBounds.extents.z);
+		float lerpPercent = Mathf.InverseLerp(0, (focusLevel.halfXBounds + focusLevel.halfYBounds) / 2, extents);
 
-        float depth = Mathf.Lerp(DepthMax, DepthMin, lerpPercent);
-        float angle = Mathf.Lerp(AngleMax, AngleMin, lerpPercent);
+		float depth = Mathf.Lerp(DepthMax, DepthMin, lerpPercent);
+		float angle = Mathf.Lerp(AngleMax, AngleMin, lerpPercent);
 
-        CameraEulerX = angle;
-        CameraPosition = new Vector3(averageCenter.x, averageCenter.y, depth);
-        //Debug.Log(CameraPosition);
-    }
+		CameraEulerX = angle;
+		CameraPosition = new Vector3(averageCenter.x, averageCenter.y, depth);
+		//Debug.Log(CameraPosition);
+	}
 
-    private void MoveCamera() {
+	private void MoveCamera() {
 
-        Vector3 position = gameObject.transform.position;
+		Vector3 position = gameObject.transform.position;
 
-        if (position != CameraPosition) {
+		if (position != CameraPosition) {
 
-            Vector3 targetPosition = Vector3.zero;
-            targetPosition.x = Mathf.MoveTowards(position.x, CameraPosition.x, PositionUpdateSpeed * Time.deltaTime);
-            targetPosition.y = Mathf.MoveTowards(position.y, CameraPosition.y + offsetY, PositionUpdateSpeed * Time.deltaTime);
-            targetPosition.z = Mathf.MoveTowards(position.z, CameraPosition.z, DepthUpdateSpeed * Time.deltaTime);
-            gameObject.transform.position = targetPosition;
-        }
+			Vector3 targetPosition = Vector3.zero;
+			targetPosition.x = Mathf.MoveTowards(position.x, CameraPosition.x, PositionUpdateSpeed * Time.deltaTime);
+			targetPosition.y = Mathf.MoveTowards(position.y, CameraPosition.y + offsetY, PositionUpdateSpeed * Time.deltaTime);
+			targetPosition.z = Mathf.MoveTowards(position.z, CameraPosition.z, DepthUpdateSpeed * Time.deltaTime);
+			gameObject.transform.position = targetPosition;
+		}
 
 		Vector3 localEulerAngles = gameObject.transform.localEulerAngles;
 
-        if (localEulerAngles.x != CameraEulerX) {
+		if (localEulerAngles.x != CameraEulerX) {
 
-            Vector3 targetEulerAngles = new Vector3(CameraEulerX, localEulerAngles.y, localEulerAngles.z);
-            gameObject.transform.localEulerAngles = Vector3.MoveTowards(localEulerAngles, targetEulerAngles, AngleUpdateSpeed * Time.deltaTime);
-        }
-    }
+			Vector3 targetEulerAngles = new Vector3(CameraEulerX, localEulerAngles.y, localEulerAngles.z);
+			gameObject.transform.localEulerAngles = Vector3.MoveTowards(localEulerAngles, targetEulerAngles, AngleUpdateSpeed * Time.deltaTime);
+		}
+	}
 
 }
