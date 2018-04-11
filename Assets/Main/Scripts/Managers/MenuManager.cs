@@ -4,12 +4,10 @@
 public class MenuManager : MonoBehaviour
 {
 	[HideInInspector] public Animator anim;
-	private Shooting shooting;
 
 	// Use this for initialization
 	private void Start()
 	{
 		anim = Camera.main.GetComponent<Animator>();
-		shooting = GetComponent<Shooting>();
 	}
 }
