@@ -1,14 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 //Used by all scripts in the Menu to get references for stuff.
-public class MenuManager : MonoBehaviour {
+public class MenuManager : MonoBehaviour
+{
 	[HideInInspector] public Animator anim;
-	Shooting shooting;
+	private Shooting shooting;
 
 	// Use this for initialization
-	void Start () {
+	private void Start()
+	{
 		anim = Camera.main.GetComponent<Animator>();
 		shooting = GetComponent<Shooting>();
 	}

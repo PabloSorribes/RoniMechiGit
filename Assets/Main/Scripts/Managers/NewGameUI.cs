@@ -1,15 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class NewGameUI : MonoBehaviour {
-
-	GameManager gameManager;
-	GameStateManager gsManager;
-	AudioManager audioMan;
+public class NewGameUI : MonoBehaviour
+{
+	private GameManager gameManager;
+	private GameStateManager gsManager;
+	private AudioManager audioMan;
 
 	private EventSystem eventSystem;
 	public GameObject postGameScreen;
@@ -20,15 +18,19 @@ public class NewGameUI : MonoBehaviour {
 
 	//Singleton
 	private static NewGameUI instance;
-	public static NewGameUI GetInstance() {
+
+	public static NewGameUI GetInstance()
+	{
 		return instance;
 	}
 
-	private void Awake() {
+	private void Awake()
+	{
 		instance = this;
 	}
 
-	private void Start() {
+	private void Start()
+	{
 		gameManager = GameManager.GetInstance();
 		gsManager = GameStateManager.GetInstance();
 		audioMan = AudioManager.GetInstance();
@@ -36,45 +38,46 @@ public class NewGameUI : MonoBehaviour {
 		eventSystem = GetComponentInChildren<EventSystem>();
 	}
 
-	public void Update() {
-
+	public void Update()
+	{
 		//If not in the MainMenu, allow pausing.
-		if (gsManager.currentGameState != GameStateManager.GameState.inMenu || gsManager.currentGameState != GameStateManager.GameState.gameOver) {
+		if (gsManager.currentGameState != GameStateManager.GameState.inMenu || gsManager.currentGameState != GameStateManager.GameState.gameOver)
+		{
 			//print("allow pausing");
 			PauseUI();
 		}
 	}
 
-	public void PauseUI() {
-
+	public void PauseUI()
+	{
 		//When in playmode and game isn't over.
-		if ((Input.GetKeyDown(KeyCode.JoystickButton7) || Input.GetKeyDown(KeyCode.Escape)) 
-			&& gsManager.currentGameState != GameStateManager.GameState.gameOver) {
-
+		if ((Input.GetKeyDown(KeyCode.JoystickButton7) || Input.GetKeyDown(KeyCode.Escape))
+			&& gsManager.currentGameState != GameStateManager.GameState.gameOver)
+		{
 			// First keypress → Pause the game and highlight the ContinueButton.
-			if (gsManager.currentGameState == GameStateManager.GameState.inGame) {
-
+			if (gsManager.currentGameState == GameStateManager.GameState.inGame)
+			{
 				PauseGame();
 				eventSystem.SetSelectedGameObject(GameObject.Find("ContinueButton"));
 			}
 			// Second keypress → Unpause the game.
-			else if (gsManager.currentGameState == GameStateManager.GameState.inPauseMenu) {
-
+			else if (gsManager.currentGameState == GameStateManager.GameState.inPauseMenu)
+			{
 				ResumeGame();
 			}
 		}
 	}
 
-	public void PauseGame() {
-
+	public void PauseGame()
+	{
 		audioMan.LowerVolumeInPauseMenu(true);
 		Time.timeScale = 0;
 		pauseMenu.SetActive(true);
 		gsManager.currentGameState = GameStateManager.GameState.inPauseMenu;
 	}
 
-	public void ResumeGame() {
-
+	public void ResumeGame()
+	{
 		audioMan.LowerVolumeInPauseMenu(false);
 		Time.timeScale = 1;
 		pauseMenu.SetActive(false);
@@ -82,13 +85,14 @@ public class NewGameUI : MonoBehaviour {
 	}
 
 	//Overload Method where we can get sent the player which died or so.
-	public void PostGameInformation(PlayerHandler p_playerHandler) {
-
+	public void PostGameInformation(PlayerHandler p_playerHandler)
+	{
 		ShowPostMenu();
 		print(p_playerHandler.playerController.currentPlayer + " has won!");
 	}
 
-	private void ShowPostMenu() {
+	private void ShowPostMenu()
+	{
 		//print("Showing Post Menu");
 
 		Time.timeScale = 0;
@@ -102,46 +106,53 @@ public class NewGameUI : MonoBehaviour {
 	/// <summary>
 	/// Called by GameManager at StartGame()
 	/// </summary>
-	public void StartCounterStuff() {
-
+	public void StartCounterStuff()
+	{
 		counter--;
 		startCounterTextObject.text = "MATCH STARTS IN " + counter;
 		startCounterTextObject.text = "";
 
-		if (counter == 0) {
+		if (counter == 0)
+		{
 		}
 	}
 
-	/*	
+	/*
 		------------------------------------------------
 		PUBLIC FUNCTIONS ACCESSED BY THE MENU UI BUTTONS
 		------------------------------------------------
 	*/
-	public void LoadLevel(string p_levelName) {
+
+	public void LoadLevel(string p_levelName)
+	{
 		SceneManager.LoadScene(p_levelName);
 	}
 
-	public void LoadLevel_ReloadThisLevel() {
+	public void LoadLevel_ReloadThisLevel()
+	{
 		//audioMan.LowerVolumeInPauseMenu(false);
 		string thisSceneName = SceneManager.GetActiveScene().name;
 		SceneManager.LoadScene(thisSceneName);
 	}
 
-	public void LoadLevel_SpikeyCavern() {
+	public void LoadLevel_SpikeyCavern()
+	{
 		SceneManager.LoadScene("Spikey Cavern_TestVersion2");
 	}
 
-	public void LoadLevel_MayanTempel() {
+	public void LoadLevel_MayanTempel()
+	{
 		SceneManager.LoadScene("Mayan Tempel");
 	}
 
-	public void LoadLevel_MainMenu() {
+	public void LoadLevel_MainMenu()
+	{
 		SceneManager.LoadScene("Scene_Menu");
 	}
 
 	//Quit the game regardless if playing in Editor, WebPlayer or in .exe-file.
-	public void QuitGame() {
-
+	public void QuitGame()
+	{
 #if UNITY_EDITOR
 		UnityEditor.EditorApplication.isPlaying = false;
 #elif UNITY_WEBPLAYER
@@ -150,5 +161,4 @@ public class NewGameUI : MonoBehaviour {
 		 Application.Quit();
 #endif
 	}
-
 }
