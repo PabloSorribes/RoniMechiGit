@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LavaButton : MonoBehaviour
@@ -9,19 +8,20 @@ public class LavaButton : MonoBehaviour
 	[SerializeField]
 	private FMODUnity.StudioEventEmitter FmodComponent_forwardBackward;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Bullet" || other.tag == "Player") {
-                groundToMakeDisappear.SetActive(false);
-                StartCoroutine("Timelavaplat");
+	private void OnTriggerEnter(Collider other)
+	{
+		if (other.tag == "Bullet" || other.tag == "Player")
+		{
+			groundToMakeDisappear.SetActive(false);
+			StartCoroutine("Timelavaplat");
 
 			FmodComponent_forwardBackward.Play();
-
 		}
 	}
-    IEnumerator Timelavaplat()
-    {
-        yield return new WaitForSeconds(1f);
-        groundToMakeDisappear.SetActive(true);
-    }
+
+	private IEnumerator Timelavaplat()
+	{
+		yield return new WaitForSeconds(1f);
+		groundToMakeDisappear.SetActive(true);
+	}
 }
