@@ -1,15 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SpinHand : MonoBehaviour
 {
-    public float speed = 10f;
+	public float speed = 10f;
 
-
-    void Update()
-    {
-        transform.Rotate(Vector3.up, speed * Time.deltaTime);
-    }
+	private void Update()
+	{
+		transform.Rotate(Vector3.up, speed * Time.deltaTime);
+	}
 }
-
