@@ -12,7 +12,6 @@ public class PlayerHandler : MonoBehaviour {
 	public bool handlerHasSpawned;
 	public int timesSpawnIsCalled = 0;
 
-	private bool useRandomSpawnLocations = false;
 	public bool spawnLookingLeft;
 
 	public int maxLife = 3;
