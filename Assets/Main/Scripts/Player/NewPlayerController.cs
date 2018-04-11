@@ -7,37 +7,37 @@ using FMODUnity;
 
 public class NewPlayerController : MonoBehaviour {
 
-    [HideInInspector] public PlayerHandler playerHandler;
-    
-    [HideInInspector] public Shooting myShooter;
-    [HideInInspector] public Rigidbody playerRigidbody;
-    private Animator playerAnimator;
+	[HideInInspector] public PlayerHandler playerHandler;
+	
+	[HideInInspector] public Shooting myShooter;
+	[HideInInspector] public Rigidbody playerRigidbody;
+	private Animator playerAnimator;
 
-    [HideInInspector] public string currentPlayer;
+	[HideInInspector] public string currentPlayer;
 
-    public enum PlayerState { idle, running, jumping, inAir }
-    [Header("--- MAIN STATS ---")]
-    public PlayerState currentStatePlayer;
+	public enum PlayerState { idle, running, jumping, inAir }
+	[Header("--- MAIN STATS ---")]
+	public PlayerState currentStatePlayer;
 
-    public bool canMove = true;
-    [HideInInspector] public bool isGrounded;
+	public bool canMove = true;
+	[HideInInspector] public bool isGrounded;
 	public Renderer theBodyColor;
 
-    [Header("--- MOVEMENT ---")]
-    public float moveSpeed;
-    public float moveSpeedAirborne;
-    public float jumpVelocity;
-    private int jumpsRemaining = 2;
+	[Header("--- MOVEMENT ---")]
+	public float moveSpeed;
+	public float moveSpeedAirborne;
+	public float jumpVelocity;
+	private int jumpsRemaining = 2;
 
-    [HideInInspector] public float horizontalAxis;
-    [HideInInspector] public float verticalAxis;
-    private Vector3 movementDirection;
-    private GameObject movingPlatform;
+	[HideInInspector] public float horizontalAxis;
+	[HideInInspector] public float verticalAxis;
+	private Vector3 movementDirection;
+	private GameObject movingPlatform;
 
-    [Header("--- GRAVITY ---")]
-    //Used in the BetterFall-function
-    [SerializeField] private float fallMultiplier = 3f;
-    [SerializeField] private float lowJumpMultiplier = 2f;
+	[Header("--- GRAVITY ---")]
+	//Used in the BetterFall-function
+	[SerializeField] private float fallMultiplier = 3f;
+	[SerializeField] private float lowJumpMultiplier = 2f;
 
 
 	[Header("---PARTICLES---")]
@@ -55,15 +55,15 @@ public class NewPlayerController : MonoBehaviour {
 	private StudioEventEmitter a_runningLoop;
 
 	void Start() {
-        myShooter = GetComponentInChildren<Shooting>();
-        playerAnimator = GetComponent<Animator>();
-        playerRigidbody = GetComponent<Rigidbody>();
-        playerAnimator.applyRootMotion = false;
+		myShooter = GetComponentInChildren<Shooting>();
+		playerAnimator = GetComponent<Animator>();
+		playerRigidbody = GetComponent<Rigidbody>();
+		playerAnimator.applyRootMotion = false;
 
-        currentStatePlayer = PlayerState.idle;
+		currentStatePlayer = PlayerState.idle;
 
-        //Rename the player object to which controller it is assigned to.
-        this.name = "Player_RoniMechi" + currentPlayer;
+		//Rename the player object to which controller it is assigned to.
+		this.name = "Player_RoniMechi" + currentPlayer;
 
 		ChangePlayerColor();
 
@@ -142,14 +142,14 @@ public class NewPlayerController : MonoBehaviour {
 		NoSleepingRigidbody();
 
 		GetAxisValues();
-        CharacterMovement();
+		CharacterMovement();
 
-        DebugKeyboardInput();
+		DebugKeyboardInput();
 
-        //DEBUG:
-        //print("Current State of Player: " + currentStatePlayer);
-        //print("Current jumps left: " + jumpsRemaining);
-    }
+		//DEBUG:
+		//print("Current State of Player: " + currentStatePlayer);
+		//print("Current jumps left: " + jumpsRemaining);
+	}
 
 	/// <summary>
 	/// Avoids the rigidbody from falling asleep and fucking with collision n shiz. Should run in Update().
@@ -170,208 +170,208 @@ public class NewPlayerController : MonoBehaviour {
 		verticalAxis = CrossPlatformInputManager.GetAxis("Vertical" + currentPlayer);
 	}
 
-    private void FixedUpdate() {
-        BetterFall();
-    }
+	private void FixedUpdate() {
+		BetterFall();
+	}
 
-    public void CharacterMovement() {
-        
-        //If the player is on the ground and is not moving, it is Idle
-        if (isGrounded && horizontalAxis == 0) {
+	public void CharacterMovement() {
+		
+		//If the player is on the ground and is not moving, it is Idle
+		if (isGrounded && horizontalAxis == 0) {
 
 			PlayStopSound(a_runningLoop, false);
 			//print("Stopped run audio");
-            CharacterWalk(horizontalAxis);
-            currentStatePlayer = PlayerState.idle;
-        }
+			CharacterWalk(horizontalAxis);
+			currentStatePlayer = PlayerState.idle;
+		}
 
-        //The player can only move if it is on the ground, no walking in the air!
-        if (isGrounded && horizontalAxis != 0 && canMove) {
+		//The player can only move if it is on the ground, no walking in the air!
+		if (isGrounded && horizontalAxis != 0 && canMove) {
 
 			if (!a_runningLoop.IsPlaying()) {
 				PlayStopSound(a_runningLoop, true);
 				//print("Playing run audio");
 			}
 			
-            CharacterWalk(horizontalAxis);
-            currentStatePlayer = PlayerState.running;
-        }
+			CharacterWalk(horizontalAxis);
+			currentStatePlayer = PlayerState.running;
+		}
 
-        //If the player presses the A button, make the character jump!
-        if (CrossPlatformInputManager.GetButtonDown("Jump" + currentPlayer) && canMove) {
-            CharacterJump();
+		//If the player presses the A button, make the character jump!
+		if (CrossPlatformInputManager.GetButtonDown("Jump" + currentPlayer) && canMove) {
+			CharacterJump();
 			//JumpSound();
-            currentStatePlayer = PlayerState.jumping;
-        }
+			currentStatePlayer = PlayerState.jumping;
+		}
 
-        //TODO: Add statement to see if you've been hit by something/are falling, or if you are jumping by yourself.
-        if (!isGrounded) {
+		//TODO: Add statement to see if you've been hit by something/are falling, or if you are jumping by yourself.
+		if (!isGrounded) {
 
 			PlayStopSound(a_runningLoop, false);
 			currentStatePlayer = PlayerState.inAir;
-        }
+		}
 
-        if (!isGrounded && myShooter.shootingState == Shooting.ShootingState.aiming) {
-            MovementInAir();
-        }
-        else if (!isGrounded && canMove) {
-            AirControl(horizontalAxis);
-        }
-    }
+		if (!isGrounded && myShooter.shootingState == Shooting.ShootingState.aiming) {
+			MovementInAir();
+		}
+		else if (!isGrounded && canMove) {
+			AirControl(horizontalAxis);
+		}
+	}
 
-    public void CharacterWalk(float p_inputDirection) {
-        ///** MOVEMENT: LEFT **///
-        //if the player is pressing left on the left stick, move left
-        if (p_inputDirection < 0) {
+	public void CharacterWalk(float p_inputDirection) {
+		///** MOVEMENT: LEFT **///
+		//if the player is pressing left on the left stick, move left
+		if (p_inputDirection < 0) {
 
-            //Vector for flying and aiming at the same time.
-            movementDirection = Vector3.left;
+			//Vector for flying and aiming at the same time.
+			movementDirection = Vector3.left;
 
-            //move left at the movementspeed
-            transform.position += Vector3.left * moveSpeed * Time.deltaTime;
-            
-            //Rotate the character to face in the direction it is moving
-            transform.rotation = Quaternion.LookRotation(Vector3.left);
-        }
+			//move left at the movementspeed
+			transform.position += Vector3.left * moveSpeed * Time.deltaTime;
+			
+			//Rotate the character to face in the direction it is moving
+			transform.rotation = Quaternion.LookRotation(Vector3.left);
+		}
 
-        ///** MOVEMENT: RIGHT **///
-        if (p_inputDirection > 0) {
-            movementDirection = Vector3.right;
-            transform.position += Vector3.right * moveSpeed * Time.deltaTime;
-            transform.rotation = Quaternion.LookRotation(Vector3.right);
-        }
+		///** MOVEMENT: RIGHT **///
+		if (p_inputDirection > 0) {
+			movementDirection = Vector3.right;
+			transform.position += Vector3.right * moveSpeed * Time.deltaTime;
+			transform.rotation = Quaternion.LookRotation(Vector3.right);
+		}
 
-        WalkAnimationsHandler();
-    }
-    
-    //TODO: A separate script or a different way to add all the possible Animation Transitions into the same function.
-    // These should then be called through: AnimationsHandler().AnimationTransitionName()
-    public void WalkAnimationsHandler() {
+		WalkAnimationsHandler();
+	}
+	
+	//TODO: A separate script or a different way to add all the possible Animation Transitions into the same function.
+	// These should then be called through: AnimationsHandler().AnimationTransitionName()
+	public void WalkAnimationsHandler() {
 
-        //if (myShooter.shootingState == Shooting.ShootingState.aiming) {
-        //    playerAnimator.SetTrigger("ToShooting");
-        //}
+		//if (myShooter.shootingState == Shooting.ShootingState.aiming) {
+		//    playerAnimator.SetTrigger("ToShooting");
+		//}
 
-        //if the character is standing still, start the idle animation
-        if (!canMove)
-        {
-            playerAnimator.SetTrigger("ToIdle");
-        }
-        else if (AxisInputForAnimations() < 0.1) {
-            playerAnimator.SetTrigger("ToIdle");
-        }
+		//if the character is standing still, start the idle animation
+		if (!canMove)
+		{
+			playerAnimator.SetTrigger("ToIdle");
+		}
+		else if (AxisInputForAnimations() < 0.1) {
+			playerAnimator.SetTrigger("ToIdle");
+		}
 
-        //Start the animation for walking, based on X-AxisValues
-        playerAnimator.SetFloat("Speed", AxisInputForAnimations());
-    }
+		//Start the animation for walking, based on X-AxisValues
+		playerAnimator.SetFloat("Speed", AxisInputForAnimations());
+	}
 
-    public float AxisInputForAnimations() {
+	public float AxisInputForAnimations() {
 
-        //By using the absolute value, the trigger condition for running (in the animation controller) 
-        //is NOT stopped by LeftHorizontal being less than zero (ie. -0.1 to -1)
-        float movementInput = Mathf.Abs(Input.GetAxisRaw("Horizontal" + currentPlayer));
+		//By using the absolute value, the trigger condition for running (in the animation controller) 
+		//is NOT stopped by LeftHorizontal being less than zero (ie. -0.1 to -1)
+		float movementInput = Mathf.Abs(Input.GetAxisRaw("Horizontal" + currentPlayer));
 
-        return movementInput; 
-    }
+		return movementInput; 
+	}
 
-    public void CharacterJump() {
-        //if the character is on the ground and has more than 0 jumps remaining
-        if (isGrounded && jumpsRemaining > 0) {
+	public void CharacterJump() {
+		//if the character is on the ground and has more than 0 jumps remaining
+		if (isGrounded && jumpsRemaining > 0) {
 
-            JumpAllDirections(horizontalAxis);
-        }
-       
-        ///** DOUBLE JUMP **///
-        //The code for double jumping will execute only if the player is in the air, and has exactly one jump left
-        else if (!isGrounded && jumpsRemaining == 1) {
+			JumpAllDirections(horizontalAxis);
+		}
+	   
+		///** DOUBLE JUMP **///
+		//The code for double jumping will execute only if the player is in the air, and has exactly one jump left
+		else if (!isGrounded && jumpsRemaining == 1) {
 
-            JumpAllDirections(horizontalAxis);
-        }
+			JumpAllDirections(horizontalAxis);
+		}
 
 	}
 
 	private void JumpAllDirections(float p_inputDirection) {
 
-        //Start the animation for jumping
-        playerAnimator.SetTrigger("ToJump");
+		//Start the animation for jumping
+		playerAnimator.SetTrigger("ToJump");
 
-        //Jump Up
-        playerRigidbody.velocity = Vector3.up * jumpVelocity;
+		//Jump Up
+		playerRigidbody.velocity = Vector3.up * jumpVelocity;
 
-        //The player is no longer on the ground
-        isGrounded = false;
+		//The player is no longer on the ground
+		isGrounded = false;
 
-        //Remove one jump from the jumps remaining
-        jumpsRemaining--;
+		//Remove one jump from the jumps remaining
+		jumpsRemaining--;
 
 		PlayStopSound(a_jump, true);
 	}
 
 	private void AirControl(float p_inputDirection) {
 
-        ///** MOVEMENT: LEFT **///
-        //if the player is pressing left on the left stick, move left
-        if (p_inputDirection < 0) {
+		///** MOVEMENT: LEFT **///
+		//if the player is pressing left on the left stick, move left
+		if (p_inputDirection < 0) {
 
-            //move left at the movementspeed
-            transform.position += Vector3.left * moveSpeedAirborne * Time.deltaTime;
+			//move left at the movementspeed
+			transform.position += Vector3.left * moveSpeedAirborne * Time.deltaTime;
 
-            //Rotate the character to face in the direction it is moving
-            transform.rotation = Quaternion.LookRotation(Vector3.left);
-        }
+			//Rotate the character to face in the direction it is moving
+			transform.rotation = Quaternion.LookRotation(Vector3.left);
+		}
 
-        ///** MOVEMENT: RIGHT **///
-        if (p_inputDirection > 0) {
-            transform.position += Vector3.right * moveSpeedAirborne * Time.deltaTime;
-            transform.rotation = Quaternion.LookRotation(Vector3.right);
-        }
-    }
+		///** MOVEMENT: RIGHT **///
+		if (p_inputDirection > 0) {
+			transform.position += Vector3.right * moveSpeedAirborne * Time.deltaTime;
+			transform.rotation = Quaternion.LookRotation(Vector3.right);
+		}
+	}
 
-    private void MovementInAir() {
+	private void MovementInAir() {
 
-        if (movementDirection == Vector3.left) {
-            transform.position += Vector3.left * moveSpeedAirborne * Time.deltaTime;
-        }
-        else if (movementDirection == Vector3.right) {
-            transform.position += Vector3.right * moveSpeedAirborne * Time.deltaTime;
-        }
-    }
+		if (movementDirection == Vector3.left) {
+			transform.position += Vector3.left * moveSpeedAirborne * Time.deltaTime;
+		}
+		else if (movementDirection == Vector3.right) {
+			transform.position += Vector3.right * moveSpeedAirborne * Time.deltaTime;
+		}
+	}
 
-    //Sets the isGrounded-variable if the player is on the Ground
-    public void OnCollisionEnter(Collision p_collision) {
+	//Sets the isGrounded-variable if the player is on the Ground
+	public void OnCollisionEnter(Collision p_collision) {
 
-        if (p_collision.transform.tag == "Ground") {
-            
-            //Ref platform
-            movingPlatform = p_collision.gameObject;
+		if (p_collision.transform.tag == "Ground") {
+			
+			//Ref platform
+			movingPlatform = p_collision.gameObject;
 
-            //Stick the player to platform by parenting to it.
-            transform.parent = movingPlatform.transform;
+			//Stick the player to platform by parenting to it.
+			transform.parent = movingPlatform.transform;
 
-            isGrounded = true;
-        } 
+			isGrounded = true;
+		} 
 
-        else if (p_collision.transform.tag == "MenuPlatforms") {
-            isGrounded = true;
-        }
+		else if (p_collision.transform.tag == "MenuPlatforms") {
+			isGrounded = true;
+		}
 
-        if (isGrounded) {
+		if (isGrounded) {
 
-            jumpsRemaining = 2;
-        }
-    }
+			jumpsRemaining = 2;
+		}
+	}
 
-    public void OnCollisionExit(Collision p_collision) {
+	public void OnCollisionExit(Collision p_collision) {
 
-        //Re-parent the player to its PlayerHandler.
-        //transform.SetParent(playerHandler.transform, true);
+		//Re-parent the player to its PlayerHandler.
+		//transform.SetParent(playerHandler.transform, true);
 
 		//Un-parent the player from any platform
-        transform.SetParent(null);
+		transform.SetParent(null);
 
-        //Reset the player scale to its original value (for when accidentally landing on a non-prepared Default Platform)
-        transform.localScale = new Vector3(1, 1, 1);
-    }
+		//Reset the player scale to its original value (for when accidentally landing on a non-prepared Default Platform)
+		transform.localScale = new Vector3(1, 1, 1);
+	}
 
 	/// <summary>
 	/// For giving the fall more juicyness.
@@ -379,10 +379,10 @@ public class NewPlayerController : MonoBehaviour {
 	/// <para></para> Source: https://youtu.be/7KiK0Aqtmzc
 	/// </summary>
 	public void BetterFall() {
-        if (playerRigidbody.velocity.y < 0)
-        {
-            playerRigidbody.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.fixedDeltaTime;
-        }
+		if (playerRigidbody.velocity.y < 0)
+		{
+			playerRigidbody.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.fixedDeltaTime;
+		}
 		//Reason of Removal: It added gravity to player 3 only.
 		//UPDATE: See if this works now.
 		//else if (playerRigidbody.velocity.y > 0 && CrossPlatformInputManager.GetButton("Jump" + currentPlayer)) {
@@ -392,38 +392,38 @@ public class NewPlayerController : MonoBehaviour {
 
 	public void DebugKeyboardInput() {
 
-        ///** LEFT **///
-        if (Input.GetKey(KeyCode.A)) {
-            CharacterWalk(-1f);
-            playerAnimator.SetFloat("Speed", 0.5f);
-        }
+		///** LEFT **///
+		if (Input.GetKey(KeyCode.A)) {
+			CharacterWalk(-1f);
+			playerAnimator.SetFloat("Speed", 0.5f);
+		}
 
-        //if the character is standing still, start the idle animation
-        if (Input.GetKeyUp(KeyCode.A)) {
-            playerAnimator.SetFloat("Speed", 0.0f);
-        }
+		//if the character is standing still, start the idle animation
+		if (Input.GetKeyUp(KeyCode.A)) {
+			playerAnimator.SetFloat("Speed", 0.0f);
+		}
 
-        ///** RIGHT **///
-        if (Input.GetKey(KeyCode.D)) {
-            CharacterWalk(1f);
-            playerAnimator.SetFloat("Speed", 0.5f);
-        }
+		///** RIGHT **///
+		if (Input.GetKey(KeyCode.D)) {
+			CharacterWalk(1f);
+			playerAnimator.SetFloat("Speed", 0.5f);
+		}
 
-        //if the character is standing still, start the idle animation
-        if (Input.GetKeyUp(KeyCode.D)) {
-            playerAnimator.SetFloat("Speed", 0.0f);
-        }
+		//if the character is standing still, start the idle animation
+		if (Input.GetKeyUp(KeyCode.D)) {
+			playerAnimator.SetFloat("Speed", 0.0f);
+		}
 
-        ///** JUMP **///
-        if (Input.GetKeyDown(KeyCode.W) && jumpsRemaining >= 1) {
-            JumpAllDirections(0f);
-        }
+		///** JUMP **///
+		if (Input.GetKeyDown(KeyCode.W) && jumpsRemaining >= 1) {
+			JumpAllDirections(0f);
+		}
 
-        //If the character has landed, start the idle animation
-        if (Input.GetKeyUp(KeyCode.W) && isGrounded) {
-            playerAnimator.SetTrigger("ToIdle");
-        }
-    }
+		//If the character has landed, start the idle animation
+		if (Input.GetKeyUp(KeyCode.W) && isGrounded) {
+			playerAnimator.SetTrigger("ToIdle");
+		}
+	}
 
 	private void OnDestroy() {
 
