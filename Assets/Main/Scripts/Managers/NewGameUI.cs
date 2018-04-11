@@ -14,7 +14,6 @@ public class NewGameUI : MonoBehaviour {
 	private EventSystem eventSystem;
 	public GameObject postGameScreen;
 	public GameObject pauseMenu;
-	private bool isTheGameOver = false;
 
 	public Text startCounterTextObject;
 	private int counter = 4;
@@ -94,7 +93,6 @@ public class NewGameUI : MonoBehaviour {
 
 		Time.timeScale = 0;
 		postGameScreen.SetActive(true);
-		isTheGameOver = true;
 
 		eventSystem.SetSelectedGameObject(GameObject.Find("RestartPostButton"));
 
