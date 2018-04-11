@@ -9,7 +9,6 @@ public class LoadLevel : MonoBehaviour
 	public MenuManager menuManager;
 	[HideInInspector] public int mapCounter = 0;
 	private int beforeCounter = 0;
-	private GameObject player;
 	public bool playMayanTempel;
 	public bool playSpikeyCavern;
 	public bool playIcicleStuffs;
@@ -18,15 +17,8 @@ public class LoadLevel : MonoBehaviour
 
 	private void Start()
 	{
-		Invoke("GetPlayerOne", 1f);
-
 		a_enterLevelSound = gameObject.AddComponent<FMODUnity.StudioEventEmitter>();
 		a_enterLevelSound.Event = "event:/uiButton_forward";
-	}
-
-	private void GetPlayerOne()
-	{
-		player = GameManager.GetInstance().playerHandlers[0].playerController.gameObject;
 	}
 
 	private void Update()
