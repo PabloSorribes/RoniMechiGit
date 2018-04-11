@@ -1,37 +1,34 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using FMODUnity;
 using UnityEngine;
-using FMODUnity;
-using FMOD.Studio;
 
-public class AudioManager : MonoBehaviour {
-
-	GameStateManager gsManager;
+public class AudioManager : MonoBehaviour
+{
+	private GameStateManager gsManager;
 
 	//Creates field in inspector. Drag FmodStudioEventEmitter-component on it. Set event in the component.
 	private FMODUnity.StudioEventEmitter music;
 	private FMODUnity.StudioEventEmitter snap_inPauseMenu;
 
-	string masterBusString = "Bus:/MAIN";
-	FMOD.Studio.Bus masterBus;
-	float mainBusVolumeToSet = 1;
-
-
+	private string masterBusString = "Bus:/MAIN";
+	private FMOD.Studio.Bus masterBus;
+	private float mainBusVolumeToSet = 1;
 
 	//Singleton
 	private static AudioManager instance;
-	public static AudioManager GetInstance() {
 
+	public static AudioManager GetInstance()
+	{
 		return instance;
 	}
 
-	private void Awake() {
+	private void Awake()
+	{
 		instance = this;
 	}
 
 	// Use this for initialization
-	void Start() {
-
+	private void Start()
+	{
 		//Makes Audio run in background (when Alt-Tabbing for live-mixing and so on).
 		Application.runInBackground = true;
 
@@ -50,14 +47,14 @@ public class AudioManager : MonoBehaviour {
 	}
 
 	//Choose music depending on which GameState we are in.
-	private void StartLevelMusic() {
-
-		if (gsManager.currentGameState == GameStateManager.GameState.inMenu) {
-
+	private void StartLevelMusic()
+	{
+		if (gsManager.currentGameState == GameStateManager.GameState.inMenu)
+		{
 			music.Event = "event:/musicMenu";
 		}
-		else if (gsManager.currentGameState == GameStateManager.GameState.inGame) {
-
+		else if (gsManager.currentGameState == GameStateManager.GameState.inGame)
+		{
 			music.Event = "event:/musicGame";
 		}
 		music.Play();
@@ -67,48 +64,46 @@ public class AudioManager : MonoBehaviour {
 	/// TRUE = starts snapshot. FALSE = stops snapshot.
 	/// </summary>
 	/// <param name="p_active"></param>
-	public void LowerVolumeInPauseMenu(bool p_active) {
-
-		if (p_active) {
+	public void LowerVolumeInPauseMenu(bool p_active)
+	{
+		if (p_active)
+		{
 			music.SetParameter("vaporwave", 1f);
 			snap_inPauseMenu.Play();
 		}
-		else {
+		else
+		{
 			music.SetParameter("vaporwave", 0f);
 			snap_inPauseMenu.Stop();
 		}
-	}
-
-	// Update is called once per frame
-	void Update() {
-
-
 	}
 
 	/// <summary>
 	/// <paramref name="p_turnOffAudio"/> → TRUE for turning off audio. FALSE for turning it back on.
 	/// </summary>
 	/// <param name="p_turnOffAudio"></param>
-	public void MuteAudio(bool p_turnOffAudio) {
-
+	public void MuteAudio(bool p_turnOffAudio)
+	{
 		masterBus.setMute(p_turnOffAudio);
 	}
 
 	/// <summary>
 	/// <paramref name="p_volumeToChangeWith"/> should preferably be something small, such as 0.15f (volume increase) or -0.15f (volume decrease)
-	/// <para></para> 0 == No volume, -80 dB. 
-	/// <para></para> 1 == Max volume, 0 dB (or the level set in the Fmod-project?) 
+	/// <para></para> 0 == No volume, -80 dB.
+	/// <para></para> 1 == Max volume, 0 dB (or the level set in the Fmod-project?)
 	/// </summary>
 	/// <param name="p_volumeToChangeWith"></param>
-	public void SetAudioVolume(float p_volumeToChangeWith) {
-
+	public void SetAudioVolume(float p_volumeToChangeWith)
+	{
 		mainBusVolumeToSet += p_volumeToChangeWith;
 
-		if (mainBusVolumeToSet > 1) {
+		if (mainBusVolumeToSet > 1)
+		{
 			mainBusVolumeToSet = 1;
 		}
 
-		if (mainBusVolumeToSet < 0) {
+		if (mainBusVolumeToSet < 0)
+		{
 			mainBusVolumeToSet = 0;
 		}
 
@@ -117,7 +112,8 @@ public class AudioManager : MonoBehaviour {
 		print(mainBusVolumeToSet);
 	}
 
-	private void OnDestroy() {
+	private void OnDestroy()
+	{
 		//Reset Pause-/GameOver-menu snapshot for audio when loading a new/the same Scene.
 		LowerVolumeInPauseMenu(false);
 		music.Stop();
