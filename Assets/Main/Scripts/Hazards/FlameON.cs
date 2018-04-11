@@ -41,8 +41,8 @@ public class FlameON : MonoBehaviour
 		timeLeftToFlaming -= Time.deltaTime;
 		if (timeLeftToFlaming <= 0f)
 		{
-			//play the particle effect. 
-			//Has to be in Update() for it to look nice, since the particles aren't spawned correctly in the prefab. 
+			//play the particle effect.
+			//Has to be in Update() for it to look nice, since the particles aren't spawned correctly in the prefab.
 			lavaEmitter.Play();
 
 			//Do once
