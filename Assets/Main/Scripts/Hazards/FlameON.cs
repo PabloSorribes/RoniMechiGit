@@ -7,17 +7,13 @@ public class FlameON : MonoBehaviour
 	private Collider flameCollider;
 
 	private float timeLeftToFlaming;
-	private bool playFlames = false;
-
-	private float time;
-	public float emitterNumber;
+	private bool activateFlamesOnce = false;
 
 	private FMODUnity.StudioEventEmitter a_fireLoop;
 
 	// Use this for initialization
 	private void Start()
 	{
-		time = 0;
 		flameCollider = GetComponent<Collider>();
 		flameCollider.enabled = false;
 
@@ -43,23 +39,19 @@ public class FlameON : MonoBehaviour
 	private void Update()
 	{
 		timeLeftToFlaming -= Time.deltaTime;
-		//print("Time to start flames: " + timeLeftToFlaming);
-		print("Play flames: " + playFlames);
 		if (timeLeftToFlaming <= 0f)
 		{
 			//play the particle effect. 
-			//Has to be in Update for it to look nice, since the particles aren't spawned correctly in the prefab. 
+			//Has to be in Update() for it to look nice, since the particles aren't spawned correctly in the prefab. 
 			lavaEmitter.Play();
 
 			//Do once
-			if (!playFlames)
+			if (!activateFlamesOnce)
 			{
 				float randomInterval = Random.Range(3f, 5f);
 				StartCoroutine(PlayFlamesAndStopAfterTime(randomInterval));
 			}
 		}
-
-		//OldFunction();
 	}
 
 	private IEnumerator PlayFlamesAndStopAfterTime(float timeToWait)
@@ -71,15 +63,10 @@ public class FlameON : MonoBehaviour
 
 	private void StartPlayingFlames()
 	{
-		print("Flame on!");
-
-		playFlames = true;
+		activateFlamesOnce = true;
 
 		//enable the box collider of the specific lava emitter.
 		flameCollider.enabled = true;
-
-		//play the particle effect.
-		lavaEmitter.Play();
 
 		if (!a_fireLoop.IsPlaying())
 			a_fireLoop.Play();
@@ -87,53 +74,16 @@ public class FlameON : MonoBehaviour
 
 	private void StopPlayingFlames()
 	{
-		print("Stop flaming.");
-
 		timeLeftToFlaming = GetTimeToPlayFlames();
-		playFlames = false;
+		activateFlamesOnce = false;
 
 		//when the interval has passed, disable the box collider so players aren't killed when the particles are inactive.
 		flameCollider.enabled = false;
+
 		//stop the particle effect.
 		lavaEmitter.Stop();
 
 		a_fireLoop.Stop();
-	}
-
-	private void OldFunction()
-	{
-		//The int time is counted by each lava emitter and depending on what number the emitter has, it will activate its collider and spawn fire at
-		//different intervals.
-		if (time > (500 * emitterNumber) && time < (800 * emitterNumber))
-		{
-			//enable the box collider of the specific lava emitter.
-			flameCollider.enabled = true;
-			//play the particle effect.
-			lavaEmitter.Play();
-			//print("Burn!");
-
-			if (!a_fireLoop.IsPlaying())
-			{
-				a_fireLoop.Play();
-			}
-		}
-		else if (time > (800 * emitterNumber))
-		{
-			//when the interval has passed, disable the box collider so players aren't killed when the particles are inactive.
-			flameCollider.enabled = false;
-			//stop the particle effect.
-			lavaEmitter.Stop();
-
-			a_fireLoop.Stop();
-		}
-
-		//100 frames after the last particle effect has stopped, reset the timing to 0 and start over.
-		if (time >= 2500)
-		{
-			time = 0;
-		}
-
-		time++;
 	}
 
 	public void OnTriggerEnter(Collider p_collide)
