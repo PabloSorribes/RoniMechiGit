@@ -1,14 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// Handles GameStates and Number of Joined Players. 
-/// <para> 
+/// Handles GameStates and Number of Joined Players.
+/// <para>
 /// IMPORTANT: There can only be ONE object with this script in the entire game, since it isn't destroyed when loading scenes.</para>
 /// </summary>
-public class GameStateManager : MonoBehaviour {
+public class GameStateManager : MonoBehaviour
+{
 	//public List<int> joinedPlayersInt;
 	public List<JoinedPlayer> joinedPlayersList;
 
@@ -25,15 +25,17 @@ public class GameStateManager : MonoBehaviour {
 
 	//Singleton
 	private static GameStateManager instance;
-	public static GameStateManager GetInstance() {
 
+	public static GameStateManager GetInstance()
+	{
 		return instance;
 	}
 
 	/// <summary>
 	/// This makes this instance
 	/// </summary>
-	public void Awake() {
+	public void Awake()
+	{
 		instance = this;
 	}
 
@@ -41,8 +43,8 @@ public class GameStateManager : MonoBehaviour {
 	/// The class used to populate the JoinedPlayers list.
 	/// <para> "myIndex" can be used to know which player is allocated in which spot of the List. </para>
 	/// </summary>
-	public class JoinedPlayer {
-
+	public class JoinedPlayer
+	{
 		public int myIndex;
 		public bool hasBeenSpawned;
 
@@ -50,15 +52,17 @@ public class GameStateManager : MonoBehaviour {
 		/// The class used to populate the JoinedPlayers list.
 		/// <para> "myIndex" can be used to know which player is allocated in which spot of the List. </para>
 		/// </summary>
-		public JoinedPlayer(int p_myIndex, bool p_hasBeenSpawned) {
-
+		public JoinedPlayer(int p_myIndex, bool p_hasBeenSpawned)
+		{
 			myIndex = p_myIndex;
 			hasBeenSpawned = p_hasBeenSpawned;
 		}
 
 		//This method is required by the IComparable interface, ie. SORTING A LIST
-		public int CompareTo(JoinedPlayer other) {
-			if (other == null) {
+		public int CompareTo(JoinedPlayer other)
+		{
+			if (other == null)
+			{
 				return 1;
 			}
 
@@ -68,7 +72,8 @@ public class GameStateManager : MonoBehaviour {
 		}
 	}
 
-	void Start() {
+	private void Start()
+	{
 		//Subscribe to the event of scenes being loaded.
 		SceneManager.sceneLoaded += SceneManager_sceneLoaded;
 
@@ -80,42 +85,46 @@ public class GameStateManager : MonoBehaviour {
 		joinedPlayersList.Capacity = 4;
 
 		//Debug for simulating spawning players in the player selection menu, when in the test_menu
-		if (SceneManager.GetActiveScene().name == testMenuName && currentGameState == GameState.inMenu) {
+		if (SceneManager.GetActiveScene().name == testMenuName && currentGameState == GameState.inMenu)
+		{
 			currentMainMenuState = MenuState.playerSelection;
 		}
 
 		// WARNING: The GameStateManager-prefab cannot be underneath another object, else it WILL GET DESTROYED when loading a new scene.
+		transform.parent = null;
 		DontDestroyOnLoad(transform.gameObject);
 
-		//- Hide the mouse-cursor 
+		//- Hide the mouse-cursor
 		Cursor.visible = false;
 
 		//- Only keep one instance of this object in the game.
-		if (instance == null) {
+		if (instance == null)
+		{
 			instance = this;
 		}
-		else if (FindObjectOfType<GameStateManager>().gameObject != this.gameObject) {
+		else if (FindObjectOfType<GameStateManager>().gameObject != this.gameObject)
+		{
 			Destroy(FindObjectOfType<GameStateManager>().gameObject);
 		}
 
 		InitializeAudio();
 	}
 
-	private void InitializeAudio() {
-
+	private void InitializeAudio()
+	{
 		presentationSnapshot = gameObject.AddComponent<FMODUnity.StudioEventEmitter>();
 		presentationSnapshot.Event = "snapshot:/presentationSnapshot";
 	}
 
-	private void Update() {
-
+	private void Update()
+	{
 		//print("GameState: " + currentGameState);
 		//print("MenuState: " + currentMenuState);
 		//print("Joined players Int: " + joinedPlayersInt.Count);
 		//print("Joined players list Length: " + joinedPlayersList.Count);
 
-		foreach (var _joinedPlayer in joinedPlayersList) {
-
+		foreach (var _joinedPlayer in joinedPlayersList)
+		{
 			//print("JoinedPlayer: " + _joinedPlayer.myIndex + ". → Has been spawned: " + _joinedPlayer.hasBeenSpawned);
 		}
 
@@ -126,33 +135,34 @@ public class GameStateManager : MonoBehaviour {
 
 		Debug_LoadPlaySceneOrMenuScene();
 
-		if (Input.GetKeyDown(KeyCode.Alpha0)) {
+		if (Input.GetKeyDown(KeyCode.Alpha0))
+		{
 			RestartGame();
 		}
 
 		GetPresentationAudioInput();
 	}
 
-	private void GetPresentationAudioInput() {
-
-		if (Input.GetKeyDown(KeyCode.Alpha5)) {
-
+	private void GetPresentationAudioInput()
+	{
+		if (Input.GetKeyDown(KeyCode.Alpha5))
+		{
 			ActivatePresentationAudio();
 		}
 
-		if (Input.GetKeyDown(KeyCode.Alpha6)) {
-
+		if (Input.GetKeyDown(KeyCode.Alpha6))
+		{
 			DeActivatePresentationAudio();
 		}
 	}
 
-	private void ActivatePresentationAudio() {
-
+	private void ActivatePresentationAudio()
+	{
 		presentationSnapshot.Play();
 	}
 
-	private void DeActivatePresentationAudio() {
-
+	private void DeActivatePresentationAudio()
+	{
 		presentationSnapshot.Stop();
 	}
 
@@ -161,10 +171,12 @@ public class GameStateManager : MonoBehaviour {
 	/// <para>Registers the player with the index being inputted in the function.</para>
 	/// </summary>
 	/// <param name="p_index"></param>
-	public void RegisterPlayer(int p_index) {
-		if (p_index == 0 || p_index == 1 || p_index == 2 || p_index == 3) {
-
-			JoinedPlayer _newJoinedPlayer = new JoinedPlayer(0, false) {
+	public void RegisterPlayer(int p_index)
+	{
+		if (p_index == 0 || p_index == 1 || p_index == 2 || p_index == 3)
+		{
+			JoinedPlayer _newJoinedPlayer = new JoinedPlayer(0, false)
+			{
 				myIndex = p_index,
 				hasBeenSpawned = true
 			};
@@ -176,24 +188,24 @@ public class GameStateManager : MonoBehaviour {
 			int amountOfThisPlayerIndexThatHaveJoined = 0;
 
 			//Scan the list for players that have the same "myIndex", ie. duplicates. Add them to the int.
-			for (int i = 0; i < joinedPlayersList.Count; i++) {
-
-				if (joinedPlayersList[i].myIndex == p_index) {
-
+			for (int i = 0; i < joinedPlayersList.Count; i++)
+			{
+				if (joinedPlayersList[i].myIndex == p_index)
+				{
 					amountOfThisPlayerIndexThatHaveJoined++;
 				}
 			}
 
 			//Remove the extra player that was added the second time this function was called.
-			if (amountOfThisPlayerIndexThatHaveJoined > 1) {
-
+			if (amountOfThisPlayerIndexThatHaveJoined > 1)
+			{
 				joinedPlayersList.Remove(_newJoinedPlayer);
 				//print("Removed excess player from Players Joined-list");
 			}
 
 			//Set the first player that was added into the "spawned"-state again (because of how UnRegisterPlayer() works)
-			if (joinedPlayersList[p_index] != null) {
-
+			if (joinedPlayersList[p_index] != null)
+			{
 				//print("List contains Player: " + _newJoinedPlayer.myIndex);
 				joinedPlayersList[p_index].hasBeenSpawned = true;
 			}
@@ -204,41 +216,43 @@ public class GameStateManager : MonoBehaviour {
 	/// Sets the selected player from the joinedPlayers-list to "hasBeenSpawned" = false.  Used to despawn players in the Menu.
 	/// </summary>
 	/// <param name="p_index"></param>
-	public void UnRegisterPlayer(int p_index) {
-
-		if (p_index == 0 || p_index == 1 || p_index == 2 || p_index == 3) {
-
+	public void UnRegisterPlayer(int p_index)
+	{
+		if (p_index == 0 || p_index == 1 || p_index == 2 || p_index == 3)
+		{
 			joinedPlayersList[p_index].hasBeenSpawned = false;
 			//joinedPlayersList.RemoveAt(p_index);
 
-
-			//TODO:	Using an int is bad. 
-			//		When removing players in a non-sorted manner the player will keep their index, 
+			//TODO:	Using an int is bad.
+			//		When removing players in a non-sorted manner the player will keep their index,
 			//		but the length of the joinedPlayersInt-list will be shorter than the p_index being sent to it.
 			//		This will create a NullRef, and the player won't be able to despawn.
 			//joinedPlayersInt.Remove(p_index);
 		}
 	}
 
-	public void Debug_LoadPlaySceneOrMenuScene() {
-
-		if (Input.GetKeyDown(KeyCode.N)) {
+	public void Debug_LoadPlaySceneOrMenuScene()
+	{
+		if (Input.GetKeyDown(KeyCode.N))
+		{
 			//SceneManager.LoadScene("Scene_Pablo");
 			SceneManager.LoadScene("Spikey Cavern_TestVersion2");
 		}
 
-		if (Input.GetKeyDown(KeyCode.B)) {
+		if (Input.GetKeyDown(KeyCode.B))
+		{
 			SceneManager.LoadScene(testMenuName);
 		}
 	}
 
-	public void RestartGame() {
+	public void RestartGame()
+	{
 		SceneManager.LoadScene(realMenuName);
 	}
 
 	//When loading a scene, checks which scene was loaded, and does actions through that.
-	private void SceneManager_sceneLoaded(Scene p_scene, LoadSceneMode p_loadingMode) {
-
+	private void SceneManager_sceneLoaded(Scene p_scene, LoadSceneMode p_loadingMode)
+	{
 		//Reset the flow of Time when going to any new Scene.
 		Time.timeScale = 1;
 
@@ -246,7 +260,8 @@ public class GameStateManager : MonoBehaviour {
 		//AudioManager.GetInstance().LowerVolumeInPauseMenu(false);
 
 		//- When menu is loaded, clear the currently joined players list and change the Game State.
-		if (p_scene.name == realMenuName || p_scene.name == testMenuName) {
+		if (p_scene.name == realMenuName || p_scene.name == testMenuName)
+		{
 			currentGameState = GameState.inMenu;
 			print("Clearing List of Joined Players in GameStateManager");
 			//joinedPlayersInt.Clear();
@@ -254,12 +269,14 @@ public class GameStateManager : MonoBehaviour {
 		}
 
 		//DEBUG: For being able to spawn players in the test-scene
-		if (p_scene.name == testMenuName) {
+		if (p_scene.name == testMenuName)
+		{
 			currentMainMenuState = MenuState.playerSelection;
 		}
 
 		//If not in a Menu Scene, we are inGame. Also, menu state is nothing.
-		if (p_scene.name != realMenuName || p_scene.name != testMenuName) {
+		if (p_scene.name != realMenuName || p_scene.name != testMenuName)
+		{
 			currentGameState = GameState.inGame;
 			currentMainMenuState = MenuState.nothing;
 		}
