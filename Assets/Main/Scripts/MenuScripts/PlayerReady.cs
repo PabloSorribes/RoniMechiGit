@@ -15,7 +15,6 @@ public class PlayerReady : MonoBehaviour {
 	// Use this for initialization
 	void Start() {
 		menuManager = FindObjectOfType<MenuManager>();
-		//player = GameObject.FindGameObjectWithTag("Player");
 
 		FmodComponent_forwardBackward = gameObject.AddComponent<FMODUnity.StudioEventEmitter>();
 		FmodComponent_forwardBackward.Event = "event:/uiButton_forward";
