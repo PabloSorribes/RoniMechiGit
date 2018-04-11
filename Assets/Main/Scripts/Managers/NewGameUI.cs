@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class NewGameUI : MonoBehaviour
 {
-	private GameManager gameManager;
 	private GameStateManager gsManager;
 	private AudioManager audioMan;
 
@@ -31,7 +30,6 @@ public class NewGameUI : MonoBehaviour
 
 	private void Start()
 	{
-		gameManager = GameManager.GetInstance();
 		gsManager = GameStateManager.GetInstance();
 		audioMan = AudioManager.GetInstance();
 
