@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using FMODUnity;
 using UnityEngine;
-using FMODUnity;
 
-public class MapSelection : MonoBehaviour {
-
+public class MapSelection : MonoBehaviour
+{
 	public enum ArrowDirection { left, right };
 	public ArrowDirection myArrowDirection;
 
@@ -13,8 +11,8 @@ public class MapSelection : MonoBehaviour {
 
 	private StudioEventEmitter a_buttonSound;
 
-
-	private void Start() {
+	private void Start()
+	{
 		levelSelect = mapSelector.GetComponent<LoadLevel>();
 
 		a_buttonSound = gameObject.AddComponent<StudioEventEmitter>();
@@ -22,17 +20,17 @@ public class MapSelection : MonoBehaviour {
 	}
 
 	//When the player jumps/shoots into the Left-/Right-buttons in the Level Selection Menu.
-	private void OnTriggerEnter(Collider p_other) {
-
-		if (myArrowDirection == ArrowDirection.left && p_other.tag == "Player") {
-
+	private void OnTriggerEnter(Collider p_other)
+	{
+		if (myArrowDirection == ArrowDirection.left && p_other.tag == "Player")
+		{
 			levelSelect.mapCounter--;
 			ShowLevel();
 
 			a_buttonSound.Play();
 		}
-		else if (myArrowDirection == ArrowDirection.right && p_other.tag == "Player") {
-
+		else if (myArrowDirection == ArrowDirection.right && p_other.tag == "Player")
+		{
 			levelSelect.mapCounter++;
 			ShowLevel();
 
@@ -40,16 +38,15 @@ public class MapSelection : MonoBehaviour {
 		}
 	}
 
-	private void ShowLevel() {
-
-		if (levelSelect.mapCounter == 0 || levelSelect.mapCounter == 3) {
+	private void ShowLevel()
+	{
+		if (levelSelect.mapCounter == 0 || levelSelect.mapCounter == 3)
 			levelSelect.playSpikeyCavern = true;
-		}
-		if (levelSelect.mapCounter == 1) {
+
+		if (levelSelect.mapCounter == 1)
 			levelSelect.playMayanTempel = true;
-		}
-		if (levelSelect.mapCounter == 2 || levelSelect.mapCounter == -1) {
+
+		if (levelSelect.mapCounter == 2 || levelSelect.mapCounter == -1)
 			levelSelect.playIcicleStuffs = true;
-		}
 	}
 }
