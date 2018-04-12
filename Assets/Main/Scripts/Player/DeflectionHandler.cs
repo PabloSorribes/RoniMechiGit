@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using FMODUnity;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
-using FMODUnity;
 
-public class DeflectionHandler : MonoBehaviour {
-
+public class DeflectionHandler : MonoBehaviour
+{
 	public enum DeflectionState { idle, deflecting }
 	[Header("--- Current Shooting State ---")]
 	public DeflectionState deflectionState;
@@ -22,12 +20,13 @@ public class DeflectionHandler : MonoBehaviour {
 
 	private StudioEventEmitter a_deflectSpawn;
 	private StudioEventEmitter a_deflectReloaded;
-	bool stopReloadedSound;
+	private bool stopReloadedSound;
 
 	public System.Action OnActivateShield;
 
 	// Use this for initialization
-	void Start() {
+	private void Start()
+	{
 		playerController = GetComponent<NewPlayerController>();
 		deflectionSphere.SetActive(false);
 
@@ -37,8 +36,8 @@ public class DeflectionHandler : MonoBehaviour {
 		InitializeAudio();
 	}
 
-	private void InitializeAudio() {
-
+	private void InitializeAudio()
+	{
 		a_deflectSpawn = gameObject.AddComponent<StudioEventEmitter>();
 		a_deflectSpawn.Event = "event:/Player/Deflect/player_deflect_spawn";
 
@@ -47,19 +46,22 @@ public class DeflectionHandler : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void Update() {
+	private void Update()
+	{
 		GetDeflectionInput();
 		LoadUpGraphics();
 	}
 
-	private void GetDeflectionInput() {
+	private void GetDeflectionInput()
+	{
 		//Count continously upwards. Is reset when activating deflection shield.
 		deflectionCounter = deflectionCounter + Time.deltaTime;
 
 		//Activate deflection shield.
-		if (CrossPlatformInputManager.GetButtonDown("Deflect" + playerController.currentPlayer) || Input.GetKeyDown(KeyCode.F)) {
-			if (deflectionCounter >= deflectionCooldown) {
-
+		if (CrossPlatformInputManager.GetButtonDown(_Inputs.deflectionButton + playerController.currentPlayer) || Input.GetKeyDown(KeyCode.F))
+		{
+			if (deflectionCounter >= deflectionCooldown)
+			{
 				deflectionState = DeflectionState.deflecting;
 
 				deflectionCounter = 0;
@@ -69,8 +71,8 @@ public class DeflectionHandler : MonoBehaviour {
 		}
 	}
 
-	private void ShowDeflectionSphere() {
-
+	private void ShowDeflectionSphere()
+	{
 		//Function call for Shooting.cs to hook up into.
 		OnActivateShield();
 
@@ -91,8 +93,8 @@ public class DeflectionHandler : MonoBehaviour {
 		Invoke("HideDeflectionSphere", timeToTurnOffShield);
 	}
 
-	private void HideDeflectionSphere() {
-
+	private void HideDeflectionSphere()
+	{
 		a_deflectSpawn.Stop();
 
 		deflectionSphere.SetActive(false);
@@ -103,24 +105,28 @@ public class DeflectionHandler : MonoBehaviour {
 	/// <summary>
 	/// UI for when the player can deflect again.
 	/// </summary>
-	private void LoadUpGraphics() {
-
-		if (deflectionCounter >= deflectionCooldown) {
+	private void LoadUpGraphics()
+	{
+		if (deflectionCounter >= deflectionCooldown)
+		{
 			spotlights.SetActive(true);
 			star.SetActive(true);
 
 			//"Do once"-bool condition, based on ability to activate the shield or not.
-			if (stopReloadedSound == false) {
+			if (stopReloadedSound == false)
+			{
 				a_deflectReloaded.Play();
 				stopReloadedSound = true;
 			}
 		}
-		else {
+		else
+		{
 			stopReloadedSound = false;
 		}
 	}
 
-	private void OnDestroy() {
+	private void OnDestroy()
+	{
 		a_deflectSpawn.Stop();
 	}
 }
