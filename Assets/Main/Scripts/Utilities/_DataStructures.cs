@@ -25,3 +25,11 @@ public class _Levels
 	public const string testMenu = "test_SpawningInMenu";
 	public const string elton = "Scene_Elton";
 }
+
+public class _Inputs
+{
+	public const string shootButton = "Fire1";
+	public const string jumpButton = "Scene_Menu";
+	public const string mainMenu = "Scene_Menu";
+
+}
