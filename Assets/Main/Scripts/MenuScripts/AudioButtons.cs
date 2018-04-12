@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class AudioButtons : MonoBehaviour {
-
-	AudioManager audioManager;
+public class AudioButtons : MonoBehaviour
+{
+	private AudioManager audioManager;
 
 	public enum ButtonAction { mute, unMute, up, down };
 	public ButtonAction audioAction;
@@ -12,27 +10,27 @@ public class AudioButtons : MonoBehaviour {
 	private FMODUnity.StudioEventEmitter a_volumeUpDownSound;
 
 	// Use this for initialization
-	void Start () {
-
+	private void Start()
+	{
 		audioManager = AudioManager.GetInstance();
-
 		a_volumeUpDownSound = gameObject.AddComponent<FMODUnity.StudioEventEmitter>();
 	}
 
-	private void OnTriggerEnter(Collider p_other) {
-
-		if (p_other.tag == "Bullet" || p_other.tag == "Player") {
-
+	private void OnTriggerEnter(Collider p_other)
+	{
+		if (p_other.tag == _Tags.bullet || p_other.tag == _Tags.player)
+		{
 			AudioMuteAndVolumeChange();
 		}
 	}
 
-	private void AudioMuteAndVolumeChange() {
-
+	private void AudioMuteAndVolumeChange()
+	{
 		float volumeChange = 0.15f;
 
-		//Decide direction
-		switch (audioAction) {
+		//Decide audio change
+		switch (audioAction)
+		{
 			case ButtonAction.mute:
 				audioManager.MuteAudio(true);
 				break;

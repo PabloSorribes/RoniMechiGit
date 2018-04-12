@@ -24,7 +24,7 @@ public class Icicle : MonoBehaviour
 
 	private void OnTriggerStay(Collider p_collide)
 	{
-		if (p_collide.tag == "Player")
+		if (p_collide.tag == _Tags.player)
 		{
 			a_icicleIsHit.Play();
 
@@ -34,12 +34,12 @@ public class Icicle : MonoBehaviour
 
 			GetComponent<Rigidbody>().useGravity = true;
 		}
-		if (p_collide.tag == "Bullet")
+		if (p_collide.tag == _Tags.bullet)
 		{
 			a_icicleIsHit.Play();
 			GetComponent<Rigidbody>().useGravity = true;
 		}
-		if (p_collide.tag == "Ground")
+		if (p_collide.tag == _Tags.ground)
 		{
 			a_icicleHitGround.Play();
 

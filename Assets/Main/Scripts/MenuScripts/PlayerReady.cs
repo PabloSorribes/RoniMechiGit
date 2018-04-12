@@ -30,7 +30,7 @@ public class PlayerReady : MonoBehaviour
 	// Update is called once per frame
 	public void OnTriggerEnter(Collider other)
 	{
-		if (other.tag == "Player")
+		if (other.tag == _Tags.player)
 		{
 			//Is the button is "unready", set it to "ready"
 			if (GetComponent<Animator>().GetBool("ReadyUnready") == false)

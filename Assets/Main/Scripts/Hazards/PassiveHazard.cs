@@ -15,16 +15,18 @@ public class PassiveHazard : MonoBehaviour
 
 	public void OnTriggerEnter(Collider p_collide)
 	{
-		if (p_collide.tag == "Player")
+		if (p_collide.tag == _Tags.player)
 		{
 			switch (thisHazardObject)
 			{
 				case HazardObject.spikes:
 					HazardIsLava(p_collide);
 					break;
+
 				case HazardObject.lava:
 					HazardIsSpikes(p_collide);
 					break;
+
 				default:
 					break;
 			}
@@ -68,7 +70,7 @@ public class PassiveHazard : MonoBehaviour
 
 	private void OnTriggerStay(Collider other)
 	{
-		if (other.tag == "Player")
+		if (other.tag == _Tags.player)
 		{
 			if (thisHazardObject == HazardObject.spikes && thisSpikesTopDown == SpikesTopDown.Down)
 			{

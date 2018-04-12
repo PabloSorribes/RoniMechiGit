@@ -338,12 +338,12 @@ public class NewPlayerController : MonoBehaviour {
 	}
 
 	//Sets the isGrounded-variable if the player is on the Ground
-	public void OnCollisionEnter(Collision p_collision) {
+	public void OnCollisionEnter(Collision p_other) {
 
-		if (p_collision.transform.tag == "Ground") {
+		if (p_other.transform.tag == _Tags.ground) {
 			
 			//Ref platform
-			movingPlatform = p_collision.gameObject;
+			movingPlatform = p_other.gameObject;
 
 			//Stick the player to platform by parenting to it.
 			transform.parent = movingPlatform.transform;
@@ -351,7 +351,7 @@ public class NewPlayerController : MonoBehaviour {
 			isGrounded = true;
 		} 
 
-		else if (p_collision.transform.tag == "MenuPlatforms") {
+		else if (p_other.transform.tag == _Tags.menuPlatforms) {
 			isGrounded = true;
 		}
 

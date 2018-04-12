@@ -1406,9 +1406,7 @@ GameObject:
   - component: {fileID: 92903339}
   - component: {fileID: 92903338}
   - component: {fileID: 92903337}
-  - component: {fileID: 92903340}
   - component: {fileID: 92903336}
-  - component: {fileID: 92903341}
   m_Layer: 0
   m_Name: BackButton
   m_TagString: Untagged
@@ -1441,10 +1439,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 910694a45335d034ebb4fed288338621, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonType: 3
   playerTargetPosition: {fileID: 1826297435}
   animationToRun: BackLSelect
-  secondAnimationToRun: 
-  FmodComponent_forwardBackward: {fileID: 0}
 --- !u!23 &92903337
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1498,43 +1495,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 92903334}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &92903340
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 92903334}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &92903341
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 92903334}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: event:/uiButton_backward
-  PlayEvent: 0
-  StopEvent: 0
-  CollisionTag: 
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 0
-  OverrideMaxDistance: 0
 --- !u!4 &96750112 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 662f8125e6659d6469665cda79fb18ae, type: 3}
@@ -2675,7 +2635,7 @@ GameObject:
   - component: {fileID: 154469870}
   - component: {fileID: 154469871}
   m_Layer: 0
-  m_Name: Quit
+  m_Name: Exit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2785,7 +2745,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Event: event:/uiButton_Quit
+  Event: snapshot:/snapshot_quitGame
   PlayEvent: 0
   StopEvent: 0
   CollisionTag: 
@@ -7893,10 +7853,8 @@ GameObject:
   - component: {fileID: 450601450}
   - component: {fileID: 450601449}
   - component: {fileID: 450601448}
-  - component: {fileID: 450601447}
-  - component: {fileID: 450601452}
   m_Layer: 0
-  m_Name: Play
+  m_Name: Play (Forward)
   m_TagString: playButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7916,21 +7874,6 @@ Transform:
   m_Father: {fileID: 1454259630}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &450601447
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 450601445}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!114 &450601448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7942,10 +7885,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 910694a45335d034ebb4fed288338621, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonType: 2
   playerTargetPosition: {fileID: 1826297435}
   animationToRun: toPlayerSelection
-  secondAnimationToRun: 
-  FmodComponent_forwardBackward: {fileID: 450601452}
 --- !u!23 &450601449
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7999,28 +7941,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 450601445}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &450601452
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 450601445}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: event:/uiButton_forward
-  PlayEvent: 0
-  StopEvent: 0
-  CollisionTag: 
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 0
-  OverrideMaxDistance: 0
 --- !u!4 &457312086 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 662f8125e6659d6469665cda79fb18ae, type: 3}
@@ -12661,32 +12581,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 910694a45335d034ebb4fed288338621, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonType: 0
   playerTargetPosition: {fileID: 1515509010}
   animationToRun: 
-  secondAnimationToRun: 
-  FmodComponent_forwardBackward: {fileID: 704288434}
---- !u!114 &704288434
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 704288432}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: event:/_emptyEvent
-  PlayEvent: 0
-  StopEvent: 0
-  CollisionTag: 
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 0
-  OverrideMaxDistance: 0
 --- !u!4 &708877673 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 662f8125e6659d6469665cda79fb18ae, type: 3}
@@ -17042,7 +16939,6 @@ GameObject:
   - component: {fileID: 982467456}
   - component: {fileID: 982467455}
   - component: {fileID: 982467454}
-  - component: {fileID: 982467458}
   m_Layer: 5
   m_Name: Cube (4)
   m_TagString: Untagged
@@ -17130,21 +17026,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 982467452}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &982467458
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 982467452}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 910694a45335d034ebb4fed288338621, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerTargetPosition: {fileID: 0}
-  animationToRun: 
-  secondAnimationToRun: 
-  FmodComponent_forwardBackward: {fileID: 0}
 --- !u!1001 &982560699
 Prefab:
   m_ObjectHideFlags: 0
@@ -17405,7 +17286,6 @@ GameObject:
   - component: {fileID: 992105362}
   - component: {fileID: 992105361}
   - component: {fileID: 992105360}
-  - component: {fileID: 992105364}
   m_Layer: 5
   m_Name: Cube (4)
   m_TagString: Untagged
@@ -17493,21 +17373,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 992105358}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &992105364
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 992105358}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 910694a45335d034ebb4fed288338621, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerTargetPosition: {fileID: 0}
-  animationToRun: 
-  secondAnimationToRun: 
-  FmodComponent_forwardBackward: {fileID: 0}
 --- !u!1 &996858485
 GameObject:
   m_ObjectHideFlags: 0
@@ -21251,7 +21116,6 @@ GameObject:
   - component: {fileID: 1219197905}
   - component: {fileID: 1219197904}
   - component: {fileID: 1219197907}
-  - component: {fileID: 1219197908}
   m_Layer: 0
   m_Name: BackToMainMenuButton
   m_TagString: Untagged
@@ -21338,32 +21202,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 910694a45335d034ebb4fed288338621, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonType: 3
   playerTargetPosition: {fileID: 1515509010}
   animationToRun: BackCSelect
-  secondAnimationToRun: 
-  FmodComponent_forwardBackward: {fileID: 1219197908}
---- !u!114 &1219197908
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1219197902}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: event:/uiButton_backward
-  PlayEvent: 0
-  StopEvent: 0
-  CollisionTag: 
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 0
-  OverrideMaxDistance: 0
 --- !u!1001 &1219533824
 Prefab:
   m_ObjectHideFlags: 0
@@ -21542,32 +21383,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 910694a45335d034ebb4fed288338621, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonType: 1
   playerTargetPosition: {fileID: 1515509010}
   animationToRun: BackPSelect
-  secondAnimationToRun: 
-  FmodComponent_forwardBackward: {fileID: 0}
---- !u!114 &1228421504
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1228421497}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: event:/_emptyEvent
-  PlayEvent: 0
-  StopEvent: 0
-  CollisionTag: 
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 0
-  OverrideMaxDistance: 0
 --- !u!1001 &1236000683
 Prefab:
   m_ObjectHideFlags: 0
@@ -25099,7 +24917,6 @@ GameObject:
   - component: {fileID: 1461529283}
   - component: {fileID: 1461529282}
   - component: {fileID: 1461529286}
-  - component: {fileID: 1461529285}
   m_Layer: 0
   m_Name: BackButton
   m_TagString: MenuPlatforms
@@ -25174,28 +24991,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1461529280}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1461529285
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1461529280}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: event:/uiButton_backward
-  PlayEvent: 0
-  StopEvent: 0
-  CollisionTag: 
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 0
-  OverrideMaxDistance: 0
 --- !u!114 &1461529286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25207,10 +25002,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 910694a45335d034ebb4fed288338621, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonType: 3
   playerTargetPosition: {fileID: 1515509010}
   animationToRun: toMainMenu
-  secondAnimationToRun: 
-  FmodComponent_forwardBackward: {fileID: 1461529285}
 --- !u!1001 &1463632011
 Prefab:
   m_ObjectHideFlags: 0
@@ -28116,10 +27910,8 @@ GameObject:
   - component: {fileID: 1655791830}
   - component: {fileID: 1655791829}
   - component: {fileID: 1655791832}
-  - component: {fileID: 1655791833}
-  - component: {fileID: 1655791834}
   m_Layer: 0
-  m_Name: Settings
+  m_Name: Settings (Forward)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28203,47 +27995,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 910694a45335d034ebb4fed288338621, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonType: 2
   playerTargetPosition: {fileID: 496874335}
   animationToRun: toOptionSelection
-  secondAnimationToRun: 
-  FmodComponent_forwardBackward: {fileID: 1655791834}
---- !u!54 &1655791833
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1655791827}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &1655791834
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1655791827}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: event:/uiButton_forward
-  PlayEvent: 0
-  StopEvent: 0
-  CollisionTag: 
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 0
-  OverrideMaxDistance: 0
 --- !u!1001 &1661937009
 Prefab:
   m_ObjectHideFlags: 0
@@ -31561,7 +31315,6 @@ GameObject:
   - component: {fileID: 1861980822}
   - component: {fileID: 1861980821}
   - component: {fileID: 1861980820}
-  - component: {fileID: 1861980824}
   m_Layer: 5
   m_Name: Cube (4)
   m_TagString: Untagged
@@ -31649,21 +31402,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1861980818}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1861980824
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1861980818}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 910694a45335d034ebb4fed288338621, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerTargetPosition: {fileID: 0}
-  animationToRun: 
-  secondAnimationToRun: 
-  FmodComponent_forwardBackward: {fileID: 0}
 --- !u!1001 &1863564060
 Prefab:
   m_ObjectHideFlags: 0
@@ -32530,11 +32268,9 @@ GameObject:
   - component: {fileID: 1917475333}
   - component: {fileID: 1917475332}
   - component: {fileID: 1917475331}
-  - component: {fileID: 1917475335}
   - component: {fileID: 1917475334}
-  - component: {fileID: 1917475336}
   m_Layer: 0
-  m_Name: Credits
+  m_Name: Credits (Forward)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32618,47 +32354,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 910694a45335d034ebb4fed288338621, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonType: 2
   playerTargetPosition: {fileID: 20005988}
   animationToRun: toCreditsSelection
-  secondAnimationToRun: 
-  FmodComponent_forwardBackward: {fileID: 1917475336}
---- !u!54 &1917475335
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1917475329}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &1917475336
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1917475329}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: event:/uiButton_forward
-  PlayEvent: 0
-  StopEvent: 0
-  CollisionTag: 
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 0
-  OverrideMaxDistance: 0
 --- !u!4 &1920346264 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 662f8125e6659d6469665cda79fb18ae, type: 3}

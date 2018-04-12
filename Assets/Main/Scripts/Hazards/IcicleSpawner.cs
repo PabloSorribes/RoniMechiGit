@@ -6,7 +6,7 @@ public class IcicleSpawner : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if (other.tag == "Bullet" || other.tag == "Player")
+		if (other.tag == _Tags.bullet || other.tag == _Tags.player)
 		{
 			Invoke("DoThatThingYaWantToDo", 5.0f);
 		}

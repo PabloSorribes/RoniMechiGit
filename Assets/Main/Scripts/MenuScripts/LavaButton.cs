@@ -10,7 +10,7 @@ public class LavaButton : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if (other.tag == "Bullet" || other.tag == "Player")
+		if (other.tag == _Tags.bullet || other.tag == _Tags.player)
 		{
 			groundToMakeDisappear.SetActive(false);
 			StartCoroutine("Timelavaplat");

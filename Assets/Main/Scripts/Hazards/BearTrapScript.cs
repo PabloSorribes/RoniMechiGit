@@ -19,7 +19,7 @@ public class BearTrapScript : MonoBehaviour
 
 	private void OnTriggerStay(Collider p_other)
 	{
-		if (p_other.tag == "Player" && closed == false)
+		if (p_other.tag == _Tags.player && closed == false)
 		{
 			print(p_other.GetComponent<NewPlayerController>().canMove);
 			p_other.GetComponent<NewPlayerController>().canMove = false;
@@ -38,7 +38,7 @@ public class BearTrapScript : MonoBehaviour
 			Invoke("WaitforClosed", 2.6f);
 		}
 
-		if ((p_other.tag == "Bullet" || p_other.tag == "Icicle") && closed == false)
+		if ((p_other.tag == _Tags.bullet || p_other.tag == _Tags.icicle) && closed == false)
 		{
 			closed = true;
 			leftSideTrap.GetComponent<Animator>().SetTrigger("Close");

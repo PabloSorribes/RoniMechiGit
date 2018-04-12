@@ -67,17 +67,14 @@ public class LoadLevel : MonoBehaviour
 	{
 		a_enterLevelSound.Play();
 
-		if (other.tag == "Player" && mapCounter == 0)
+		if (other.tag == _Tags.player)
 		{
-			SceneManager.LoadScene("Spikey Cavern_TestVersion2");
-		}
-		if (other.tag == "Player" && mapCounter == 1)
-		{
-			SceneManager.LoadScene("Mayan Tempel");
-		}
-		if (other.tag == "Player" && mapCounter == 2)
-		{
-			SceneManager.LoadScene("Icicle stuffs");
+			if (mapCounter == 0)
+				SceneManager.LoadScene("Spikey Cavern_TestVersion2");
+			if (mapCounter == 1)
+				SceneManager.LoadScene("Mayan Tempel");
+			if (mapCounter == 2)
+				SceneManager.LoadScene("Icicle stuffs");
 		}
 	}
 

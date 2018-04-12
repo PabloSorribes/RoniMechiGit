@@ -86,12 +86,12 @@ public class FlameON : MonoBehaviour
 		a_fireLoop.Stop();
 	}
 
-	public void OnTriggerEnter(Collider p_collide)
+	public void OnTriggerEnter(Collider p_other)
 	{
-		if (p_collide.gameObject.tag == "Player")
+		if (p_other.tag == _Tags.player)
 		{
 			//To the PlayerHandler: Send which gameObject collided with the Hazard.
-			p_collide.gameObject.GetComponent<NewPlayerController>().playerHandler.KillPlayer();
+			p_other.gameObject.GetComponent<NewPlayerController>().playerHandler.KillPlayer();
 		}
 	}
 

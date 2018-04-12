@@ -22,18 +22,21 @@ public class MapSelection : MonoBehaviour
 	//When the player jumps/shoots into the Left-/Right-buttons in the Level Selection Menu.
 	private void OnTriggerEnter(Collider p_other)
 	{
-		if (myArrowDirection == ArrowDirection.left && p_other.tag == "Player")
+		if (p_other.tag == _Tags.player || p_other.tag == _Tags.bullet)
 		{
-			levelSelect.mapCounter--;
-			ShowLevel();
+			switch (myArrowDirection)
+			{
+				case ArrowDirection.left:
+					levelSelect.mapCounter--;
+					break;
+				case ArrowDirection.right:
+					levelSelect.mapCounter++;
+					break;
+				default:
+					break;
+			}
 
-			a_buttonSound.Play();
-		}
-		else if (myArrowDirection == ArrowDirection.right && p_other.tag == "Player")
-		{
-			levelSelect.mapCounter++;
 			ShowLevel();
-
 			a_buttonSound.Play();
 		}
 	}

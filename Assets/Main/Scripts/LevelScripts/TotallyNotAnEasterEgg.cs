@@ -13,7 +13,7 @@ public class TotallyNotAnEasterEgg : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if (other.tag == "Bullet")
+		if (other.tag == _Tags.bullet)
 		{
 			SceneManager.LoadScene("Scene_Elton");
 		}

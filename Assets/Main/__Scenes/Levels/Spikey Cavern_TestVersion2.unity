@@ -2279,6 +2279,12 @@ Prefab:
       value: 
       objectReference: {fileID: 1000012560919920, guid: 85a8865d1bf4a63478038fae23776de8,
         type: 2}
+    - target: {fileID: 114454839549782722, guid: 0308e0562a5e34c42856651b67361bdd,
+        type: 2}
+      propertyPath: splashParticleTwo
+      value: 
+      objectReference: {fileID: 1000012560919920, guid: 85a8865d1bf4a63478038fae23776de8,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0308e0562a5e34c42856651b67361bdd, type: 2}
   m_IsPrefabParent: 0
@@ -37218,7 +37224,8 @@ MonoBehaviour:
   deathAnimationTime: 1
   splashParticleOne: {fileID: 1000012560919920, guid: 85a8865d1bf4a63478038fae23776de8,
     type: 2}
-  splashParticleTwo: {fileID: 0}
+  splashParticleTwo: {fileID: 1000012560919920, guid: 85a8865d1bf4a63478038fae23776de8,
+    type: 2}
   thisHazardObject: 0
   thisSpikesTopDown: 0
 --- !u!65 &799422416
@@ -39110,7 +39117,8 @@ MonoBehaviour:
   deathAnimationTime: 1
   splashParticleOne: {fileID: 1000012560919920, guid: 85a8865d1bf4a63478038fae23776de8,
     type: 2}
-  splashParticleTwo: {fileID: 0}
+  splashParticleTwo: {fileID: 1000012560919920, guid: 85a8865d1bf4a63478038fae23776de8,
+    type: 2}
   thisHazardObject: 0
   thisSpikesTopDown: 1
 --- !u!1001 &845836763
@@ -43526,6 +43534,12 @@ Prefab:
     - target: {fileID: 114454839549782722, guid: 0308e0562a5e34c42856651b67361bdd,
         type: 2}
       propertyPath: splashParticleOne
+      value: 
+      objectReference: {fileID: 1000012560919920, guid: 85a8865d1bf4a63478038fae23776de8,
+        type: 2}
+    - target: {fileID: 114454839549782722, guid: 0308e0562a5e34c42856651b67361bdd,
+        type: 2}
+      propertyPath: splashParticleTwo
       value: 
       objectReference: {fileID: 1000012560919920, guid: 85a8865d1bf4a63478038fae23776de8,
         type: 2}
@@ -58991,7 +59005,8 @@ MonoBehaviour:
   deathAnimationTime: 1
   splashParticleOne: {fileID: 1000012560919920, guid: 85a8865d1bf4a63478038fae23776de8,
     type: 2}
-  splashParticleTwo: {fileID: 0}
+  splashParticleTwo: {fileID: 1000012560919920, guid: 85a8865d1bf4a63478038fae23776de8,
+    type: 2}
   thisHazardObject: 0
   thisSpikesTopDown: 0
 --- !u!65 &1261431262
@@ -60120,12 +60135,12 @@ Prefab:
     - target: {fileID: 224273607819417240, guid: 774e018cfb7550a43a033cb971bf869c,
         type: 2}
       propertyPath: m_LocalPosition.x
-      value: 321.5
+      value: 315.5
       objectReference: {fileID: 0}
     - target: {fileID: 224273607819417240, guid: 774e018cfb7550a43a033cb971bf869c,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: 181
+      value: 177.5
       objectReference: {fileID: 0}
     - target: {fileID: 224273607819417240, guid: 774e018cfb7550a43a033cb971bf869c,
         type: 2}
@@ -81366,7 +81381,8 @@ MonoBehaviour:
   deathAnimationTime: 1
   splashParticleOne: {fileID: 1000012560919920, guid: 85a8865d1bf4a63478038fae23776de8,
     type: 2}
-  splashParticleTwo: {fileID: 0}
+  splashParticleTwo: {fileID: 1000012560919920, guid: 85a8865d1bf4a63478038fae23776de8,
+    type: 2}
   thisHazardObject: 0
   thisSpikesTopDown: 0
 --- !u!1001 &1725076752
@@ -82861,6 +82877,18 @@ Prefab:
       propertyPath: thisSpikesTopDown
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114454839549782722, guid: 0308e0562a5e34c42856651b67361bdd,
+        type: 2}
+      propertyPath: splashParticleOne
+      value: 
+      objectReference: {fileID: 1000012560919920, guid: 85a8865d1bf4a63478038fae23776de8,
+        type: 2}
+    - target: {fileID: 114454839549782722, guid: 0308e0562a5e34c42856651b67361bdd,
+        type: 2}
+      propertyPath: splashParticleTwo
+      value: 
+      objectReference: {fileID: 1000012560919920, guid: 85a8865d1bf4a63478038fae23776de8,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0308e0562a5e34c42856651b67361bdd, type: 2}
   m_IsPrefabParent: 0
@@ -84272,7 +84300,8 @@ MonoBehaviour:
   deathAnimationTime: 1
   splashParticleOne: {fileID: 1000012560919920, guid: 85a8865d1bf4a63478038fae23776de8,
     type: 2}
-  splashParticleTwo: {fileID: 0}
+  splashParticleTwo: {fileID: 1000012560919920, guid: 85a8865d1bf4a63478038fae23776de8,
+    type: 2}
   thisHazardObject: 0
   thisSpikesTopDown: 1
 --- !u!65 &1782194644
@@ -92322,6 +92351,12 @@ Prefab:
     - target: {fileID: 114454839549782722, guid: 0308e0562a5e34c42856651b67361bdd,
         type: 2}
       propertyPath: splashParticleOne
+      value: 
+      objectReference: {fileID: 1000012560919920, guid: 85a8865d1bf4a63478038fae23776de8,
+        type: 2}
+    - target: {fileID: 114454839549782722, guid: 0308e0562a5e34c42856651b67361bdd,
+        type: 2}
+      propertyPath: splashParticleTwo
       value: 
       objectReference: {fileID: 1000012560919920, guid: 85a8865d1bf4a63478038fae23776de8,
         type: 2}

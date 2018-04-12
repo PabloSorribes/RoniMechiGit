@@ -1,34 +1,38 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class ExitButton : MonoBehaviour {
-
-	private FMODUnity.StudioEventEmitter FmodComponent_quit;
+public class ExitButton : MonoBehaviour
+{
+	private FMODUnity.StudioEventEmitter a_quitSound;
+	private FMODUnity.StudioEventEmitter a_quitSnap;
 
 	public void Start()
-    {
-		FmodComponent_quit = GetComponent<FMODUnity.StudioEventEmitter>();
-    }
+	{
+		a_quitSound = gameObject.AddComponent<FMODUnity.StudioEventEmitter>();
+		a_quitSound.Event = "event:/uiButton_Quit";
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Bullet")
-        {
-			FmodComponent_quit.Play();
+		a_quitSnap = gameObject.AddComponent<FMODUnity.StudioEventEmitter>();
+		a_quitSnap.Event = "snapshot:/snapshot_quitGame";
+	}
 
-			Quit();
-        }
-    }
+	private void OnTriggerEnter(Collider other)
+	{
+		if (other.tag == _Tags.bullet)
+		{
+			a_quitSound.Play();
+			a_quitSnap.Play();
 
-    public static void Quit()
-    {
+			Invoke("Quit", .5f);
+		}
+	}
+
+	private void Quit()
+	{
 #if UNITY_EDITOR
 		UnityEditor.EditorApplication.isPlaying = false;
 #elif UNITY_WEBPLAYER
-         Application.OpenURL(webplayerQuitURL);
+		 Application.OpenURL(webplayerQuitURL);
 #else
-         Application.Quit();
+		 Application.Quit();
 #endif
-    }
+	}
 }

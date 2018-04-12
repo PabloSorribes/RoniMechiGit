@@ -1,59 +1,93 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class ButtonsInMenu: MonoBehaviour {
+public class ButtonsInMenu : MonoBehaviour
+{
+	private GameStateManager gsManager;
+	private MenuManager menuManager;
+	private GameObject player;
+
+	public enum TypeOfButton { staticTeleporter, lavaTeleport, goForwardInMenu, goBackInMenu };
+	public TypeOfButton buttonType;
+
 	public Transform playerTargetPosition;
 	public string animationToRun;
-	public string secondAnimationToRun;
 
-	//Creates field in inspector. Drag FmodStudioEventEmitter-component on it. Set event in the component.
-	[SerializeField]
-	private FMODUnity.StudioEventEmitter FmodComponent_forwardBackward;
+	private FMODUnity.StudioEventEmitter a_buttonSound;
 
-	GameStateManager gsManager;
-
-	MenuManager menuManager;
-	GameObject player;
-
-	public void Start() {
+	public void Start()
+	{
 		menuManager = FindObjectOfType<MenuManager>();
 
 		gsManager = GameStateManager.GetInstance();
 
-		Invoke("GetPlayerOne", 1f);
+		Invoke("GetPlayerOne", .2f);
 
-		FmodComponent_forwardBackward = GetComponent<FMODUnity.StudioEventEmitter>();
+		InitializeAudio();
+	}
+
+	private void InitializeAudio()
+	{
+		string eventstring = "event:/uiButton_teleport";
+
+		switch (buttonType)
+		{
+			case TypeOfButton.staticTeleporter:
+				eventstring = "event:/uiButton_teleport";
+				break;
+
+			case TypeOfButton.lavaTeleport:
+				eventstring = "event:/uiButton_lavaTeleport";
+				break;
+
+			case TypeOfButton.goForwardInMenu:
+				eventstring = "event:/uiButton_forward";
+				break;
+
+			case TypeOfButton.goBackInMenu:
+				eventstring = "event:/uiButton_backward";
+				break;
+
+			default:
+				break;
+		}
+
+		a_buttonSound = gameObject.AddComponent<FMODUnity.StudioEventEmitter>();
+		a_buttonSound.Event = eventstring;
 	}
 
 	//TODO: Improve the getting of the player
-	void GetPlayerOne() {
+	private void GetPlayerOne()
+	{
 		player = GameManager.GetInstance().playerHandlers[0].playerController.gameObject;
 	}
 
-	private void OnTriggerEnter(Collider other) {
-
+	private void OnTriggerEnter(Collider other)
+	{
 		//Animate camera, teleport player and update the Menu Status
-		if (other.tag == "Bullet" || other.tag == "Player") {
-
-			menuManager.anim.SetTrigger(animationToRun);
+		if (other.tag == _Tags.bullet || other.tag == _Tags.player)
+		{
+			//Avoid sending an unnecessary warning when not activating an animation.
+			if (animationToRun != "")
+			{
+				menuManager.anim.SetTrigger(animationToRun);
+				UpdateMenuStatus(animationToRun);
+			}
 			player.transform.position = playerTargetPosition.position;
-
-			UpdateMenuStatus(animationToRun);
-
-			FmodComponent_forwardBackward.Play();
+			a_buttonSound.Play();
 		}
-
 	}
 
 	//TODO: Add statements for each animation that moves the camera to a different state.
-	void UpdateMenuStatus(string p_animationToRun) {
-		if (p_animationToRun == "BackPSelect") {
+	private void UpdateMenuStatus(string p_animationToRun)
+	{
+		if (p_animationToRun == "BackPSelect")
+		{
 			gsManager.currentMainMenuState = GameStateManager.MenuState.start;
 		}
 
 		//Players can join the game
-		else if (p_animationToRun == "toPlayerSelection" || p_animationToRun == "BackLSelect") {
+		else if (p_animationToRun == "toPlayerSelection" || p_animationToRun == "BackLSelect")
+		{
 			gsManager.currentMainMenuState = GameStateManager.MenuState.playerSelection;
 		}
 	}

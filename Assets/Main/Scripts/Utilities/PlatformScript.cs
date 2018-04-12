@@ -14,7 +14,7 @@ public class PlatformScript : MonoBehaviour {
     // Use this for initialization
     void Start () {
         //Set the Tag in script
-        this.tag = "Ground";
+        this.tag = _Tags.ground;
 
         //Add a boxcollider to the Main gameObject
         boxCollider = gameObject.AddComponent<BoxCollider>();
