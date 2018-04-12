@@ -1,21 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class DeflectionScript : MonoBehaviour {
-
+public class DeflectionScript : MonoBehaviour
+{
 	private FMODUnity.StudioEventEmitter a_deflectShootBack;
 
-	private void Start() {
+	private void Start()
+	{
 		a_deflectShootBack = gameObject.AddComponent<FMODUnity.StudioEventEmitter>();
 		a_deflectShootBack.Event = "event:/Player/Deflect/player_deflect_shootBack";
 	}
 
 	//If the bullet is inside the trigger, reverse its movement.
-	private void OnTriggerEnter(Collider p_other) {
-
-		if (p_other.tag == _Tags.bullet) {
-
+	private void OnTriggerEnter(Collider p_other)
+	{
+		if (p_other.tag == _Tags.bullet)
+		{
 			a_deflectShootBack.Play();
 
 			//Instantiate a new bullet.

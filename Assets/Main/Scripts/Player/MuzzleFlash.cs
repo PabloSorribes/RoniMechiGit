@@ -1,31 +1,33 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class MuzzleFlash : MonoBehaviour {
+public class MuzzleFlash : MonoBehaviour
+{
+	public GameObject flashHolder;
+	public Sprite[] flashSprites;
+	public SpriteRenderer[] spriteRenderers;
 
-    public GameObject flashHolder;
-    public Sprite[] flashSprites;
-    public SpriteRenderer[] spriteRenderers;
+	public float flashTime;
 
-    public float flashTime;
+	private void Start()
+	{
+		Deactivate();
+	}
 
-    void Start() {
-        Deactivate();
-    }
+	public void Activate()
+	{
+		flashHolder.SetActive(true);
 
-    public void Activate() {
-        flashHolder.SetActive(true);
+		int flashSpriteIndex = Random.Range(0, flashSprites.Length);
+		for (int i = 0; i < spriteRenderers.Length; i++)
+		{
+			spriteRenderers[i].sprite = flashSprites[flashSpriteIndex];
+		}
 
-        int flashSpriteIndex = Random.Range(0, flashSprites.Length);
-        for (int i = 0; i < spriteRenderers.Length; i++) {
-            spriteRenderers[i].sprite = flashSprites[flashSpriteIndex];
-        }
+		Invoke("Deactivate", flashTime);        //Invoke (start) the Deactivate-function after a set time (flashTime in this instance)
+	}
 
-        Invoke("Deactivate", flashTime);        //Invoke (start) the Deactivate-function after a set time (flashTime in this instance)
-    }
-
-    private void Deactivate() {
-        flashHolder.SetActive(false);
-    }
+	private void Deactivate()
+	{
+		flashHolder.SetActive(false);
+	}
 }
