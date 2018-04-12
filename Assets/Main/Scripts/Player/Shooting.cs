@@ -84,8 +84,8 @@ public class Shooting : MonoBehaviour
 	private Vector3 AxisInputDirection()
 	{
 		//Get references to the thumbstick's values
-		leftStickX = CrossPlatformInputManager.GetAxis("Horizontal" + playerController.currentPlayer);
-		leftStickY = CrossPlatformInputManager.GetAxis("Vertical" + playerController.currentPlayer);
+		leftStickX = CrossPlatformInputManager.GetAxis(_Inputs.horizontalAxis + playerController.currentPlayer);
+		leftStickY = CrossPlatformInputManager.GetAxis(_Inputs.verticalAxis + playerController.currentPlayer);
 
 		//Create the vector when getting input.
 		Vector3 axisInput = new Vector3(leftStickX, leftStickY, 0);

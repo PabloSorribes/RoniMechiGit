@@ -29,7 +29,8 @@ public class _Levels
 public class _Inputs
 {
 	public const string shootButton = "Fire1";
-	public const string jumpButton = "Scene_Menu";
-	public const string mainMenu = "Scene_Menu";
-
+	public const string jumpButton = "Jump";
+	public const string deflectionButton = "Scene_Menu";
+	public const string horizontalAxis = "Horizontal";
+	public const string verticalAxis = "Vertical";
 }

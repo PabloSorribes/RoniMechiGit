@@ -2388,52 +2388,6 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 662f8125e6659d6469665cda79fb18ae, type: 3}
   m_PrefabInternal: {fileID: 134916514}
---- !u!1001 &135791489
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4867374188692390, guid: 26e4a277065b65d4abce4331219b6d72, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -3.83
-      objectReference: {fileID: 0}
-    - target: {fileID: 4867374188692390, guid: 26e4a277065b65d4abce4331219b6d72, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 5.59
-      objectReference: {fileID: 0}
-    - target: {fileID: 4867374188692390, guid: 26e4a277065b65d4abce4331219b6d72, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4867374188692390, guid: 26e4a277065b65d4abce4331219b6d72, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4867374188692390, guid: 26e4a277065b65d4abce4331219b6d72, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4867374188692390, guid: 26e4a277065b65d4abce4331219b6d72, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4867374188692390, guid: 26e4a277065b65d4abce4331219b6d72, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4867374188692390, guid: 26e4a277065b65d4abce4331219b6d72, type: 2}
-      propertyPath: m_RootOrder
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 1410969480002432, guid: 26e4a277065b65d4abce4331219b6d72, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 26e4a277065b65d4abce4331219b6d72, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1001 &145064562
 Prefab:
   m_ObjectHideFlags: 0
@@ -29916,7 +29870,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1758458891}
   - component: {fileID: 1758458890}
-  - component: {fileID: 1758458889}
   - component: {fileID: 1758458888}
   m_Layer: 0
   m_Name: VeryImportant Thing Don't Touch
@@ -29936,22 +29889,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1661412a34adc5468a73ad5e4e9fe6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuManager: {fileID: 0}
---- !u!54 &1758458889
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1758458887}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 126
-  m_CollisionDetection: 0
 --- !u!65 &1758458890
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -146,24 +146,22 @@ public class GameStateManager : MonoBehaviour
 	private void GetPresentationAudioInput()
 	{
 		if (Input.GetKeyDown(KeyCode.Alpha5))
-		{
 			ActivatePresentationAudio();
-		}
 
 		if (Input.GetKeyDown(KeyCode.Alpha6))
-		{
 			DeActivatePresentationAudio();
-		}
 	}
 
 	private void ActivatePresentationAudio()
 	{
-		presentationSnapshot.Play();
+		if (!presentationSnapshot.IsPlaying())
+			presentationSnapshot.Play();
 	}
 
 	private void DeActivatePresentationAudio()
 	{
-		presentationSnapshot.Stop();
+		if (presentationSnapshot.IsPlaying())
+			presentationSnapshot.Stop();
 	}
 
 	/// <summary>
@@ -234,16 +232,16 @@ public class GameStateManager : MonoBehaviour
 	public void Debug_LoadPlaySceneOrMenuScene()
 	{
 		if (Input.GetKeyDown(KeyCode.N))
-		{
 			SceneManager.LoadScene(realMenuName);
-		}
 
 		if (Input.GetKeyDown(KeyCode.B))
-		{
 			SceneManager.LoadScene(testMenuName);
-		}
 	}
 
+	/// <summary>
+	/// Debug for resetting the game during a presentation.
+	/// </summary>
+	/// <returns></returns>
 	public void RestartGame()
 	{
 		SceneManager.LoadScene(realMenuName);
