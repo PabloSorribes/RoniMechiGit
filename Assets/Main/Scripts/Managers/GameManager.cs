@@ -21,8 +21,8 @@ public class GameManager : MonoBehaviour
 
 	private bool gameStarted;
 
-	//Action for the GameUI to update the life bars.
-	public static event System.Action<GameManager> OnUpdateGameStatus;
+	//TODO: Implement this Action for the GameUI to update the life bars, and other stuff too.
+	public static event System.Action OnUpdateGameStatus;
 
 	//Singleton
 	private static GameManager instance;
@@ -212,6 +212,7 @@ public class GameManager : MonoBehaviour
 				gsManager.currentGameState = GameStateManager.GameState.gameOver;
 				print("Everybody dieded! D: ");
 			}
+			OnUpdateGameStatus();
 		}
 	}
 }
