@@ -70,11 +70,11 @@ public class LoadLevel : MonoBehaviour
 		if (other.tag == _Tags.player)
 		{
 			if (mapCounter == 0)
-				SceneManager.LoadScene("Spikey Cavern_TestVersion2");
+				SceneManager.LoadScene(_Levels.spikeyCavern);
 			if (mapCounter == 1)
-				SceneManager.LoadScene("Mayan Tempel");
+				SceneManager.LoadScene(_Levels.mayanTemple);
 			if (mapCounter == 2)
-				SceneManager.LoadScene("Icicle stuffs");
+				SceneManager.LoadScene(_Levels.icicleStuff);
 		}
 	}
 

@@ -18,8 +18,8 @@ public class GameStateManager : MonoBehaviour
 	public enum MenuState { nothing, start, playerSelection, levelSelection, settings, credits };
 	public MenuState currentMainMenuState;
 
-	private string testMenuName = "test_SpawningInMenu";
-	private string realMenuName = "Scene_Menu";
+	private string testMenuName = _Levels.testMenu;
+	private string realMenuName = _Levels.mainMenu;
 
 	private FMODUnity.StudioEventEmitter presentationSnapshot;
 
@@ -235,8 +235,7 @@ public class GameStateManager : MonoBehaviour
 	{
 		if (Input.GetKeyDown(KeyCode.N))
 		{
-			//SceneManager.LoadScene("Scene_Pablo");
-			SceneManager.LoadScene("Spikey Cavern_TestVersion2");
+			SceneManager.LoadScene(realMenuName);
 		}
 
 		if (Input.GetKeyDown(KeyCode.B))

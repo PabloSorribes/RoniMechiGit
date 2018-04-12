@@ -135,17 +135,17 @@ public class NewGameUI : MonoBehaviour
 
 	public void LoadLevel_SpikeyCavern()
 	{
-		SceneManager.LoadScene("Spikey Cavern_TestVersion2");
+		SceneManager.LoadScene(_Levels.spikeyCavern);
 	}
 
 	public void LoadLevel_MayanTempel()
 	{
-		SceneManager.LoadScene("Mayan Tempel");
+		SceneManager.LoadScene(_Levels.mayanTemple);
 	}
 
 	public void LoadLevel_MainMenu()
 	{
-		SceneManager.LoadScene("Scene_Menu");
+		SceneManager.LoadScene(_Levels.mainMenu);
 	}
 
 	//Quit the game regardless if playing in Editor, WebPlayer or in .exe-file.
