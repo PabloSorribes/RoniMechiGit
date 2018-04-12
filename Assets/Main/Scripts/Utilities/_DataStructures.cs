@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// Contains the tags that are used by objects in the game. 
+/// Contains the tags that are used by objects in the game.
 /// By using this, we avoid a rogue typo-error in a random string.
 /// </summary>
 public class _Tags
@@ -13,7 +13,7 @@ public class _Tags
 }
 
 /// <summary>
-/// Contains the level names (strings) that are used when loading a level. 
+/// Contains the level names (strings) that are used when loading a level.
 /// By using this, we avoid a rogue typo-error in a random string.
 /// </summary>
 public class _Levels
