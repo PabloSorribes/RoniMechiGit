@@ -6,6 +6,7 @@ public class PlayerReady : MonoBehaviour
 
 	//Is set in the inspector to move PLAYER ONE to the next place in the menu.
 	public Transform playerTargetPosition;
+
 	private GameObject player;
 	public string animationToRun;
 
@@ -50,7 +51,9 @@ public class PlayerReady : MonoBehaviour
 		}
 	}
 
-	//This should just be done for Player One
+	/// <summary>
+	/// Called by an Invoke. This should just be done for Player One.
+	/// </summary>
 	private void TeleportPlayer()
 	{
 		GameStateManager.GetInstance().currentMainMenuState = GameStateManager.MenuState.levelSelection;
@@ -62,7 +65,9 @@ public class PlayerReady : MonoBehaviour
 		}
 	}
 
-	//Called
+	/// <summary>
+	/// Called by an Invoke
+	/// </summary>
 	private void BecomeUnreadyAfterTime()
 	{
 		GetComponent<Animator>().SetBool("ReadyUnready", false);

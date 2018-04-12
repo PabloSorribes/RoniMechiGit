@@ -19,7 +19,10 @@ public class MapSelection : MonoBehaviour
 		a_buttonSound.Event = "event:/uiButton_levelSelect";
 	}
 
-	//When the player jumps/shoots into the Left-/Right-buttons in the Level Selection Menu.
+	/// <summary>
+	/// When the player jumps/shoots into the Left-/Right-buttons in the Level Selection Menu.
+	/// </summary>
+	/// <param name="p_other"></param>
 	private void OnTriggerEnter(Collider p_other)
 	{
 		if (p_other.tag == _Tags.player || p_other.tag == _Tags.bullet)
@@ -29,9 +32,11 @@ public class MapSelection : MonoBehaviour
 				case ArrowDirection.left:
 					levelSelect.mapCounter--;
 					break;
+
 				case ArrowDirection.right:
 					levelSelect.mapCounter++;
 					break;
+
 				default:
 					break;
 			}
