@@ -7567,7 +7567,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 442310346}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 13.799999, y: -7.70001, z: 554.0002}
+  m_LocalPosition: {x: -6.5999985, y: -7.70001, z: 554.0002}
   m_LocalScale: {x: 1.0000902, y: 1.0000908, z: 1.0000908}
   m_Children: []
   m_Father: {fileID: 1285974295}
@@ -7575,7 +7575,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 13.8, y: -7.7000103}
+  m_AnchoredPosition: {x: -6.6, y: -7.7000103}
   m_SizeDelta: {x: 99.5, y: 15.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &442310348
@@ -7610,7 +7610,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Special Thanks To
+  m_Text: 'Special Thanks to:'
 --- !u!222 &442310349
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8210,7 +8210,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -156, y: -7.7}
-  m_SizeDelta: {x: 99.5, y: 15.3}
+  m_SizeDelta: {x: 100.65, y: 15.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &486699548
 MonoBehaviour:
@@ -8244,7 +8244,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Game Developers
+  m_Text: 'Game Developers:'
 --- !u!222 &486699549
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9890,7 +9890,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 564217579}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 12.624001, y: -52.113976, z: 554.0003}
+  m_LocalPosition: {x: 15.200001, y: -52.113976, z: 554.0003}
   m_LocalScale: {x: 1.0000902, y: 1.0000908, z: 1.0000908}
   m_Children: []
   m_Father: {fileID: 1285974295}
@@ -9898,8 +9898,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 12.624001, y: -52.11398}
-  m_SizeDelta: {x: 101.84, y: 62.326}
+  m_AnchoredPosition: {x: 15.2, y: -52.11398}
+  m_SizeDelta: {x: 147.7, y: 62.33}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &564217581
 MonoBehaviour:
@@ -9933,8 +9933,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\tMattias\n\tJim\n\tA Bit Ape (music)\n\tRobert (Teacher)\n\tM\xE5rten
-    (Teacher)"
+  m_Text: "\tMattias Johansson\n\tJim Andersson\n\tA Bit Ape (Menu Music)\n\tRobert
+    Esbj\xF6rnsson (Teacher)\n\tM\xE5rten Jonsson (Teacher)"
 --- !u!222 &564217582
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -15355,7 +15355,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 879850071}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -64.799995, y: -112.9, z: 554.0002}
+  m_LocalPosition: {x: -64.8, y: -112.9, z: 554.0002}
   m_LocalScale: {x: 1.0000902, y: 1.0000908, z: 1.0000908}
   m_Children: []
   m_Father: {fileID: 1285974295}
@@ -15364,7 +15364,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -64.8, y: -112.9}
-  m_SizeDelta: {x: 160.96, y: 59.24}
+  m_SizeDelta: {x: 167, y: 59.24}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &879850073
 MonoBehaviour:
@@ -15399,8 +15399,8 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: This game was made in an education project (Game Production) at YRGO in
-    2017. YRGO is an vocational collage in Gothenburg and this project lasted for
-    about 2 months.
+    2017. YRGO is a vocational collage in Gothenburg (Sweden) and this project lasted
+    for about 2 months.
 --- !u!222 &879850074
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -34201,7 +34201,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\tPabloo Sorribes Bernhard\n\tFredrik Lekting\n\tElton Relander\n\tJosefina
+  m_Text: "\tPablo Sorribes Bernhard\n\tFredrik Lekting\n\tElton Relander\n\tJosefina
     Runnquist"
 --- !u!222 &2010016117
 CanvasRenderer:

@@ -33,7 +33,8 @@ public class NewPlayerController : MonoBehaviour
 
 	[Header("--- GRAVITY ---")]
 	//Used in the BetterFall-function
-	[SerializeField] private float fallMultiplier = 3f;
+	[SerializeField]
+	private float fallMultiplier = 3f;
 	[SerializeField] private float lowJumpMultiplier = 2f;
 
 	[Header("---PARTICLES---")]
@@ -66,6 +67,18 @@ public class NewPlayerController : MonoBehaviour
 		PlayStopSound(a_spawn, true);
 
 		SpawnParticles();
+
+		//This is a hack
+		Invoke("MakePlayerVisibleInMenu", .2f);
+	}
+
+	/// <summary>
+	/// For some reason the player is invisible until it makes a jump when in the start menu. This is a hack.
+	/// </summary>
+	void MakePlayerVisibleInMenu()
+	{
+		if (GameStateManager.GetInstance().currentGameState == GameStateManager.GameState.inMenu)
+			CharacterJump();
 	}
 
 	private void ChangePlayerColor()
@@ -113,13 +126,9 @@ public class NewPlayerController : MonoBehaviour
 	private void PlayStopSound(StudioEventEmitter p_fmodComponent, bool p_playStop)
 	{
 		if (p_playStop)
-		{
 			p_fmodComponent.Play();
-		}
 		else
-		{
 			p_fmodComponent.Stop();
-		}
 	}
 
 	private void SpawnParticles()
@@ -171,7 +180,6 @@ public class NewPlayerController : MonoBehaviour
 		if (isGrounded && horizontalAxis == 0)
 		{
 			PlayStopSound(a_runningLoop, false);
-			//print("Stopped run audio");
 			CharacterWalk(horizontalAxis);
 			currentStatePlayer = PlayerState.idle;
 		}
@@ -182,7 +190,6 @@ public class NewPlayerController : MonoBehaviour
 			if (!a_runningLoop.IsPlaying())
 			{
 				PlayStopSound(a_runningLoop, true);
-				//print("Playing run audio");
 			}
 
 			CharacterWalk(horizontalAxis);
@@ -271,23 +278,30 @@ public class NewPlayerController : MonoBehaviour
 		return movementInput;
 	}
 
+	/// <summary>
+	/// Normal jump and Double jump.
+	/// </summary>
 	public void CharacterJump()
 	{
 		//if the character is on the ground and has more than 0 jumps remaining
 		if (isGrounded && jumpsRemaining > 0)
 		{
-			JumpAllDirections(horizontalAxis);
+			JumpAllDirections();
 		}
 
 		///** DOUBLE JUMP **///
 		//The code for double jumping will execute only if the player is in the air, and has exactly one jump left
 		else if (!isGrounded && jumpsRemaining == 1)
 		{
-			JumpAllDirections(horizontalAxis);
+			JumpAllDirections();
 		}
 	}
 
-	private void JumpAllDirections(float p_inputDirection)
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="p_inputDirection"></param>
+	private void JumpAllDirections()
 	{
 		//Start the animation for jumping
 		playerAnimator.SetTrigger("ToJump");
@@ -422,7 +436,7 @@ public class NewPlayerController : MonoBehaviour
 		///** JUMP **///
 		if (Input.GetKeyDown(KeyCode.W) && jumpsRemaining >= 1)
 		{
-			JumpAllDirections(0f);
+			JumpAllDirections();
 		}
 
 		//If the character has landed, start the idle animation
@@ -432,13 +446,12 @@ public class NewPlayerController : MonoBehaviour
 		}
 	}
 
-	public void StopRunSound()
-	{
-
-	}
-
+	/// <summary>
+	/// TODO: This should be moved to an OnKilled-function instead, to avoid spawning objects OnDestroy (and thus in-between scenes).
+	/// </summary>
 	private void OnDestroy()
 	{
+		//Will create an error in the editor. Don't mind it.
 		DeathParticles();
 
 		PlayStopSound(a_runningLoop, false);

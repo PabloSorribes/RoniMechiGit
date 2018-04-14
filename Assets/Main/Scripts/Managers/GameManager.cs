@@ -23,7 +23,6 @@ public class GameManager : MonoBehaviour
 
 	//Singleton
 	private static GameManager instance;
-
 	public static GameManager GetInstance()
 	{
 		return instance;
