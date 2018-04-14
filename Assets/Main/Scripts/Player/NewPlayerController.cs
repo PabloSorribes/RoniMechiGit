@@ -68,7 +68,7 @@ public class NewPlayerController : MonoBehaviour
 
 		SpawnParticles();
 
-		//This is a hack
+		//This is a hack. Has to be activated exactly 0.2 or more seconds after spawning for it to work. Don't know why.
 		Invoke("MakePlayerVisibleInMenu", .2f);
 	}
 
