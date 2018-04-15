@@ -52,15 +52,20 @@ public class DeflectionHandler : MonoBehaviour
 		LoadUpGraphics();
 	}
 
+	/// <summary>
+	/// Checks for Deflection-button input. 
+	/// If the player is allowed to deflect, call functions to spawn a Deflection Sphere and so on.
+	/// </summary>
 	private void GetDeflectionInput()
 	{
 		//Count continously upwards. Is reset when activating deflection shield.
-		deflectionCounter = deflectionCounter + Time.deltaTime;
+		deflectionCounter += Time.deltaTime;
 
 		//Activate deflection shield.
 		if (CrossPlatformInputManager.GetButtonDown(_Inputs.deflectionButton + playerController.currentPlayer) || Input.GetKeyDown(KeyCode.F))
 		{
-			if (deflectionCounter >= deflectionCooldown)
+			//Check if you can activate the shield or not.
+			if (CanDeflect)
 			{
 				deflectionState = DeflectionState.deflecting;
 
@@ -68,6 +73,20 @@ public class DeflectionHandler : MonoBehaviour
 
 				ShowDeflectionSphere();
 			}
+		}
+	}
+
+	private bool CanDeflect
+	{
+		get
+		{
+			bool canDeflect;
+			if (deflectionCounter >= deflectionCooldown)
+				canDeflect = true;
+			else
+				canDeflect = false;
+
+			return canDeflect;
 		}
 	}
 
@@ -79,7 +98,7 @@ public class DeflectionHandler : MonoBehaviour
 		//Audio
 		a_deflectSpawn.Play();
 
-		//UI-Graphics
+		//UX-Graphics
 		star.SetActive(false);
 		spotlights.SetActive(false);
 
@@ -107,10 +126,13 @@ public class DeflectionHandler : MonoBehaviour
 	/// </summary>
 	private void LoadUpGraphics()
 	{
-		if (deflectionCounter >= deflectionCooldown)
+		if (CanDeflect)
 		{
-			spotlights.SetActive(true);
-			star.SetActive(true);
+			if (!star.activeSelf)
+			{
+				star.SetActive(true);
+				spotlights.SetActive(true);
+			}
 
 			//"Do once"-bool condition, based on ability to activate the shield or not.
 			if (stopReloadedSound == false)
