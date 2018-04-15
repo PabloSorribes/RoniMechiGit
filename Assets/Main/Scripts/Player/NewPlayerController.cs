@@ -28,7 +28,7 @@ public class NewPlayerController : MonoBehaviour
 
 	internal float horizontalAxis;
 	internal float verticalAxis;
-	private Vector3 movementDirection;
+	private Vector3 lastGroundedMovementDirection;
 	private GameObject movingPlatform;
 
 	[Header("--- GRAVITY ---")]
@@ -78,7 +78,7 @@ public class NewPlayerController : MonoBehaviour
 	void MakePlayerVisibleInMenu()
 	{
 		if (GameStateManager.GetInstance().currentGameState == GameStateManager.GameState.inMenu)
-			CharacterJump();
+			ChooseJump();
 	}
 
 	private void ChangePlayerColor()
@@ -174,13 +174,16 @@ public class NewPlayerController : MonoBehaviour
 		BetterFall();
 	}
 
-	public void CharacterMovement()
+	/// <summary>
+	/// State-machine for choosing what the character should do, based on inputs.
+	/// </summary>
+	private void CharacterMovement()
 	{
 		//If the player is on the ground and is not moving, it is Idle
 		if (isGrounded && horizontalAxis == 0)
 		{
 			PlayStopSound(a_runningLoop, false);
-			CharacterWalk(horizontalAxis);
+			Movement(horizontalAxis);
 			currentStatePlayer = PlayerState.idle;
 		}
 
@@ -188,18 +191,16 @@ public class NewPlayerController : MonoBehaviour
 		if (isGrounded && horizontalAxis != 0 && canMove)
 		{
 			if (!a_runningLoop.IsPlaying())
-			{
 				PlayStopSound(a_runningLoop, true);
-			}
 
-			CharacterWalk(horizontalAxis);
+			Movement(horizontalAxis);
 			currentStatePlayer = PlayerState.running;
 		}
 
 		//If the player presses the A button, make the character jump!
 		if (CrossPlatformInputManager.GetButtonDown(_Inputs.jumpButton + currentPlayer) && canMove)
 		{
-			CharacterJump();
+			ChooseJump();
 			currentStatePlayer = PlayerState.jumping;
 		}
 
@@ -212,44 +213,58 @@ public class NewPlayerController : MonoBehaviour
 
 		if (!isGrounded && myShooter.shootingState == Shooting.ShootingState.aiming)
 		{
-			MovementInAir();
+			AirMovementWhileAiming();
 		}
 		else if (!isGrounded && canMove)
 		{
-			AirControl(horizontalAxis);
+			Movement(horizontalAxis, isGrounded);
 		}
 	}
 
-	public void CharacterWalk(float p_inputDirection)
+	/// <summary>
+	/// Left/right movement based on "<paramref name="p_inputDirection"/>". Set "<paramref name="isGrounded"/>" to FALSE for AirControl.
+	/// </summary>
+	/// <param name="p_inputDirection"></param>
+	private void Movement(float p_inputDirection, bool isGrounded = true)
 	{
 		///** MOVEMENT: LEFT **///
 		//if the player is pressing left on the left stick, move left
 		if (p_inputDirection < 0)
 		{
-			//Vector for flying and aiming at the same time.
-			movementDirection = Vector3.left;
-
 			//move left at the movementspeed
 			transform.position += Vector3.left * moveSpeed * Time.deltaTime;
 
 			//Rotate the character to face in the direction it is moving
 			transform.rotation = Quaternion.LookRotation(Vector3.left);
+
+			if (isGrounded)
+			{
+				//Vector for flying and aiming at the same time.
+				lastGroundedMovementDirection = Vector3.left;
+			}
 		}
 
 		///** MOVEMENT: RIGHT **///
 		if (p_inputDirection > 0)
 		{
-			movementDirection = Vector3.right;
 			transform.position += Vector3.right * moveSpeed * Time.deltaTime;
 			transform.rotation = Quaternion.LookRotation(Vector3.right);
+
+			if (isGrounded)
+			{
+				lastGroundedMovementDirection = Vector3.right;
+			}
 		}
 
 		WalkAnimationsHandler();
 	}
 
+	/// <summary>
+	/// Chooses what animations to play depending on if the player can move and the current Axis-values.
+	/// </summary>
 	//TODO: A separate script or a different way to add all the possible Animation Transitions into the same function.
 	// These should then be called through: AnimationsHandler().AnimationTransitionName()
-	public void WalkAnimationsHandler()
+	private void WalkAnimationsHandler()
 	{
 		//if (myShooter.shootingState == Shooting.ShootingState.aiming) {
 		//    playerAnimator.SetTrigger("ToShooting");
@@ -269,7 +284,11 @@ public class NewPlayerController : MonoBehaviour
 		playerAnimator.SetFloat("Speed", AxisInputForAnimations());
 	}
 
-	public float AxisInputForAnimations()
+	/// <summary>
+	/// Returns a float with an absolute value, ie. not below zero (0.1 to 1)
+	/// </summary>
+	/// <returns></returns>
+	private float AxisInputForAnimations()
 	{
 		//By using the absolute value, the trigger condition for running (in the animation controller)
 		//is NOT stopped by LeftHorizontal being less than zero (ie. -0.1 to -1)
@@ -279,29 +298,24 @@ public class NewPlayerController : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Normal jump and Double jump.
+	/// Chooses if the player should do a "Normal Jump" or a "Double Jump".
 	/// </summary>
-	public void CharacterJump()
+	private void ChooseJump()
 	{
 		//if the character is on the ground and has more than 0 jumps remaining
 		if (isGrounded && jumpsRemaining > 0)
-		{
-			JumpAllDirections();
-		}
+			JumpUp();
 
 		///** DOUBLE JUMP **///
 		//The code for double jumping will execute only if the player is in the air, and has exactly one jump left
 		else if (!isGrounded && jumpsRemaining == 1)
-		{
-			JumpAllDirections();
-		}
+			JumpUp();
 	}
 
 	/// <summary>
-	/// 
+	/// Jump up based on the "jumpVelocity"-variable and remove a jump. Sets "isGrounded" to FALSE and plays a sound.
 	/// </summary>
-	/// <param name="p_inputDirection"></param>
-	private void JumpAllDirections()
+	private void JumpUp()
 	{
 		//Start the animation for jumping
 		playerAnimator.SetTrigger("ToJump");
@@ -318,41 +332,26 @@ public class NewPlayerController : MonoBehaviour
 		PlayStopSound(a_jump, true);
 	}
 
-	private void AirControl(float p_inputDirection)
+	/// <summary>
+	/// Moves in the last inputed direction to allow aiming without activating movement.
+	/// </summary>
+	private void AirMovementWhileAiming()
 	{
-		///** MOVEMENT: LEFT **///
-		//if the player is pressing left on the left stick, move left
-		if (p_inputDirection < 0)
-		{
-			//move left at the movementspeed
-			transform.position += Vector3.left * moveSpeedAirborne * Time.deltaTime;
-
-			//Rotate the character to face in the direction it is moving
-			transform.rotation = Quaternion.LookRotation(Vector3.left);
-		}
-
-		///** MOVEMENT: RIGHT **///
-		if (p_inputDirection > 0)
-		{
-			transform.position += Vector3.right * moveSpeedAirborne * Time.deltaTime;
-			transform.rotation = Quaternion.LookRotation(Vector3.right);
-		}
-	}
-
-	private void MovementInAir()
-	{
-		if (movementDirection == Vector3.left)
+		if (lastGroundedMovementDirection == Vector3.left)
 		{
 			transform.position += Vector3.left * moveSpeedAirborne * Time.deltaTime;
 		}
-		else if (movementDirection == Vector3.right)
+		else if (lastGroundedMovementDirection == Vector3.right)
 		{
 			transform.position += Vector3.right * moveSpeedAirborne * Time.deltaTime;
 		}
 	}
 
-	//Sets the isGrounded-variable if the player is on the Ground
-	public void OnCollisionEnter(Collision p_other)
+	/// <summary>
+	/// Sets the isGrounded-variable if the player is on the Ground.
+	/// </summary>
+	/// <param name="p_other"></param>
+	private void OnCollisionEnter(Collision p_other)
 	{
 		if (p_other.transform.tag == _Tags.ground)
 		{
@@ -375,11 +374,12 @@ public class NewPlayerController : MonoBehaviour
 		}
 	}
 
-	public void OnCollisionExit(Collision p_collision)
+	/// <summary>
+	/// Un-parent the player from any platform and Reset the player scale to its original value
+	/// </summary>
+	/// <param name="p_collision"></param>
+	private void OnCollisionExit(Collision p_collision)
 	{
-		//Re-parent the player to its PlayerHandler.
-		//transform.SetParent(playerHandler.transform, true);
-
 		//Un-parent the player from any platform
 		transform.SetParent(null);
 
@@ -398,6 +398,8 @@ public class NewPlayerController : MonoBehaviour
 		{
 			playerRigidbody.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.fixedDeltaTime;
 		}
+
+		//REASON OF REMOVAL: Made the fall waaaay too fast.
 		//Add gravity to player.
 		//else if (playerRigidbody.velocity.y > 0 && CrossPlatformInputManager.GetButton(_Inputs.jumpButton + currentPlayer))
 		//{
@@ -410,7 +412,7 @@ public class NewPlayerController : MonoBehaviour
 		///** LEFT **///
 		if (Input.GetKey(KeyCode.A))
 		{
-			CharacterWalk(-1f);
+			Movement(-1f);
 			playerAnimator.SetFloat("Speed", 0.5f);
 		}
 
@@ -423,7 +425,7 @@ public class NewPlayerController : MonoBehaviour
 		///** RIGHT **///
 		if (Input.GetKey(KeyCode.D))
 		{
-			CharacterWalk(1f);
+			Movement(1f);
 			playerAnimator.SetFloat("Speed", 0.5f);
 		}
 
@@ -436,7 +438,7 @@ public class NewPlayerController : MonoBehaviour
 		///** JUMP **///
 		if (Input.GetKeyDown(KeyCode.W) && jumpsRemaining >= 1)
 		{
-			JumpAllDirections();
+			JumpUp();
 		}
 
 		//If the character has landed, start the idle animation
@@ -447,7 +449,7 @@ public class NewPlayerController : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Called by the playerHandler. 
+	/// Called by the playerHandler. Plays deathparticles and a death-sound.
 	/// </summary>
 	// Called like this instead of through OnDestroy(), to avoid spawning objects OnDestroy (and thus in-between scenes).
 	internal void OnKillPlayer()
@@ -456,17 +458,17 @@ public class NewPlayerController : MonoBehaviour
 		PlayStopSound(a_death, true);
 	}
 
+	private void DeathParticles()
+	{
+		Destroy(Instantiate(ps_deathExplosion.gameObject, this.transform.position, Quaternion.FromToRotation(Vector3.forward, Vector3.up)) as GameObject, 2f);
+		Destroy(Instantiate(ps_deathPlasma.gameObject, this.transform.position, Quaternion.FromToRotation(Vector3.forward, Vector3.up)) as GameObject, 2f);
+	}
+
 	/// <summary>
 	/// Since the running sound is a loop which is independent of the object, it has to be turned off in OnDestroy.
 	/// </summary>
 	private void OnDestroy()
 	{
 		PlayStopSound(a_runningLoop, false);
-	}
-
-	private void DeathParticles()
-	{
-		Destroy(Instantiate(ps_deathExplosion.gameObject, this.transform.position, Quaternion.FromToRotation(Vector3.forward, Vector3.up)) as GameObject, 2f);
-		Destroy(Instantiate(ps_deathPlasma.gameObject, this.transform.position, Quaternion.FromToRotation(Vector3.forward, Vector3.up)) as GameObject, 2f);
 	}
 }
