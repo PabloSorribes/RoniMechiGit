@@ -29,9 +29,9 @@ public class GameManagerMenu : MonoBehaviour
 		{
 			instance = this;
 		}
-		else if (FindObjectOfType<GameStateManager>().gameObject != this.gameObject)
+		else if (FindObjectOfType<GameManagerMenu>().gameObject != this.gameObject)
 		{
-			Destroy(FindObjectOfType<GameStateManager>().gameObject);
+			Destroy(FindObjectOfType<GameManagerMenu>().gameObject);
 		}
 	}
 
