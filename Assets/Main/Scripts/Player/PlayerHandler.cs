@@ -117,7 +117,7 @@ public class PlayerHandler : MonoBehaviour
 		active = false;
 
 		RemoveLife();
-
+		playerController.OnKillPlayer();
 		Destroy(playerObject);
 		gameManager.UpdateGameStatus(this);
 

@@ -260,7 +260,7 @@ public class GameStateManager : MonoBehaviour
 		if (p_scene.name == realMenuName || p_scene.name == testMenuName)
 		{
 			currentGameState = GameState.inMenu;
-			print("Clearing List of Joined Players in GameStateManager");
+			//print("Clearing List of Joined Players in GameStateManager");
 			//joinedPlayersInt.Clear();
 			joinedPlayersList.Clear();
 		}

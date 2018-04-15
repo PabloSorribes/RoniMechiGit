@@ -447,15 +447,21 @@ public class NewPlayerController : MonoBehaviour
 	}
 
 	/// <summary>
-	/// TODO: This should be moved to an OnKilled-function instead, to avoid spawning objects OnDestroy (and thus in-between scenes).
+	/// Called by the playerHandler. 
+	/// </summary>
+	// Called like this instead of through OnDestroy(), to avoid spawning objects OnDestroy (and thus in-between scenes).
+	internal void OnKillPlayer()
+	{
+		DeathParticles();
+		PlayStopSound(a_death, true);
+	}
+
+	/// <summary>
+	/// Since the running sound is a loop which is independent of the object, it has to be turned off in OnDestroy.
 	/// </summary>
 	private void OnDestroy()
 	{
-		//Will create an error in the editor. Don't mind it.
-		DeathParticles();
-
 		PlayStopSound(a_runningLoop, false);
-		PlayStopSound(a_death, true);
 	}
 
 	private void DeathParticles()
