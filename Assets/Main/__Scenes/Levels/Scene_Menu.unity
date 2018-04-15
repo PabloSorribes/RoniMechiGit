@@ -32167,33 +32167,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 662f8125e6659d6469665cda79fb18ae, type: 3}
   m_IsPrefabParent: 0
---- !u!1 &1914155046 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1302300966602962, guid: b986dc7e3b8200d4e99cb3e42a5ac046,
-    type: 2}
-  m_PrefabInternal: {fileID: 1675241919}
---- !u!114 &1914155047
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1914155046}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: snapshot:/snapshot_muteAll
-  PlayEvent: 0
-  StopEvent: 0
-  CollisionTag: 
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 0
-  OverrideMaxDistance: 0
 --- !u!1 &1917475329
 GameObject:
   m_ObjectHideFlags: 0

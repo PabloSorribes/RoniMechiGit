@@ -23,9 +23,10 @@ public class GameStateManager : MonoBehaviour
 
 	private FMODUnity.StudioEventEmitter presentationSnapshot;
 
+	public static System.Action<GameState> OnGameStateChanged;
+
 	//Singleton
 	private static GameStateManager instance;
-
 	public static GameStateManager GetInstance()
 	{
 		return instance;
@@ -277,6 +278,8 @@ public class GameStateManager : MonoBehaviour
 			currentGameState = GameState.inGame;
 			currentMainMenuState = MenuState.nothing;
 		}
+
+		OnGameStateChanged(currentGameState);
 
 		//This is an enum, so you'll have to use this syntax when loading it from some other function:
 		//p_loadingMode(LoadSceneMode.Single)

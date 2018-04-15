@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -21,6 +23,8 @@ public class GameManager : MonoBehaviour
 
 	private bool gameStarted;
 
+	public static System.Action OnGameStarted;
+
 	//Singleton
 	private static GameManager instance;
 	public static GameManager GetInstance()
@@ -38,37 +42,37 @@ public class GameManager : MonoBehaviour
 		gsManager = GameStateManager.GetInstance();
 		gameUI = NewGameUI.GetInstance();
 
-		//TODO: If we are inGame, play the start animation thingy whatevs
 		if (gsManager.currentGameState == GameStateManager.GameState.inGame)
 		{
-			//Invoke("StartGame", 1);
-			//Invoke("StartGame", 2);
-			//Invoke("StartGame", 3);
-			//Invoke("StartGame", 4);
+			Invoke("StartGameText", 0);
+			Invoke("StartGameText", 1);
+			Invoke("StartGameText", 2);
+			Invoke("StartGameText", 3);
 			useRandomSpawnLocations = true;
-			StartGame();
+
+			StartCoroutine(StartGameAfterTime(3));
 		}
 
 		if (gsManager.currentGameState == GameStateManager.GameState.inMenu)
 		{
 			useRandomSpawnLocations = false;
 		}
+	}
+	private void StartGameText()
+	{
+		gameUI.StartCounterStuff();
+	}
 
-		//print("Amount of playerHandlers: " + playerHandlers.Count);
-		//alivePlayers = playerHandlers.Count;
-
-		//Know status for each player
-		foreach (var handler in playerHandlers)
-		{
-			if (handler.playerIndexRobert == 0)
-			{
-				//but do this in the PlayerHandler / send it's index and player's position to the CameraController
-			}
-		}
+	private IEnumerator StartGameAfterTime(float secondsToWait)
+	{
+		yield return new WaitForSeconds(secondsToWait);
+		StartGame();
 	}
 
 	private void StartGame()
 	{
+		OnGameStarted();
+
 		//Add players depending on how many have joined
 		//foreach (var p_index in gsManager.joinedPlayersInt) {
 		//	AddPlayerHandler(p_index);
@@ -80,8 +84,6 @@ public class GameManager : MonoBehaviour
 		}
 
 		UpdateAlivePlayers(true, true);
-
-		//gameUI.StartCounterStuff();
 		AudioOnStart();
 	}
 

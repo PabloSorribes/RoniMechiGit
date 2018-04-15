@@ -17,7 +17,6 @@ public class NewGameUI : MonoBehaviour
 
 	//Singleton
 	private static NewGameUI instance;
-
 	public static NewGameUI GetInstance()
 	{
 		return instance;
@@ -102,16 +101,21 @@ public class NewGameUI : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Called by GameManager at StartGame()
+	/// TODO: Should be called by GameManager at StartGame()
 	/// </summary>
 	public void StartCounterStuff()
 	{
 		counter--;
 		startCounterTextObject.text = "MATCH STARTS IN " + counter;
-		startCounterTextObject.text = "";
+
+		if (counter > 0)
+		{
+			FMODUnity.RuntimeManager.PlayOneShot("event:/countDown");
+		}
 
 		if (counter == 0)
 		{
+			startCounterTextObject.text = "";
 		}
 	}
 

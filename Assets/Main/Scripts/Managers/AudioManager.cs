@@ -1,4 +1,5 @@
-﻿using FMODUnity;
+﻿using System;
+using FMODUnity;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -6,7 +7,9 @@ public class AudioManager : MonoBehaviour
 	private GameStateManager gsManager;
 
 	//Creates field in inspector. Drag FmodStudioEventEmitter-component on it. Set event in the component.
-	private FMODUnity.StudioEventEmitter music;
+	private FMODUnity.StudioEventEmitter musicMenu;
+	private FMODUnity.StudioEventEmitter musicGame;
+	private FMODUnity.StudioEventEmitter ambience;
 	private FMODUnity.StudioEventEmitter snap_inPauseMenu;
 
 	private string masterBusString = "Bus:/MAIN";
@@ -15,7 +18,6 @@ public class AudioManager : MonoBehaviour
 
 	//Singleton
 	private static AudioManager instance;
-
 	public static AudioManager GetInstance()
 	{
 		return instance;
@@ -33,31 +35,76 @@ public class AudioManager : MonoBehaviour
 		Application.runInBackground = true;
 
 		gsManager = GameStateManager.GetInstance();
+		GameStateManager.OnGameStateChanged += HandleGameStateChanged;
+
+		GameManager.OnGameStarted += HandleGameStarted;
 
 		//Initialize the bus.
 		masterBus = FMODUnity.RuntimeManager.GetBus(masterBusString);
 
+		InitializeAudio();
+
+		ChooseLevelMusic();
+	}
+
+	private void HandleGameStateChanged(GameStateManager.GameState obj)
+	{
+		switch (obj)
+		{
+			case GameStateManager.GameState.inMenu:
+				break;
+			case GameStateManager.GameState.inGame:
+				break;
+			case GameStateManager.GameState.inPauseMenu:
+				break;
+			case GameStateManager.GameState.gameOver:
+				break;
+			default:
+				break;
+		}
+
+	}
+
+	private void InitializeAudio()
+	{
 		//Add a StudioEventEmitter-component to the AudioManager-gameObject. This also automatically gets that as a referece.
-		music = gameObject.AddComponent<StudioEventEmitter>();
+		musicMenu = gameObject.AddComponent<StudioEventEmitter>();
+		musicMenu.Event = "event:/musicMenu";
+
+		musicGame = gameObject.AddComponent<StudioEventEmitter>();
+		musicGame.Event = "event:/musicGame";
+
+		ambience = gameObject.AddComponent<StudioEventEmitter>();
+		ambience.Event = "event:/ambience";
 
 		snap_inPauseMenu = gameObject.AddComponent<StudioEventEmitter>();
 		snap_inPauseMenu.Event = "snapshot:/inPauseMenu";
-
-		StartLevelMusic();
 	}
 
-	//Choose music depending on which GameState we are in.
-	private void StartLevelMusic()
+	/// <summary>
+	/// Choose music depending on which GameState we are in.
+	/// </summary>
+	private void ChooseLevelMusic()
 	{
 		if (gsManager.currentGameState == GameStateManager.GameState.inMenu)
 		{
-			music.Event = "event:/musicMenu";
+			ambience.Stop();
+			musicGame.Stop();
+			musicMenu.Play();
 		}
 		else if (gsManager.currentGameState == GameStateManager.GameState.inGame)
 		{
-			music.Event = "event:/musicGame";
+			ambience.Play();
+			musicMenu.Stop();
 		}
-		music.Play();
+	}
+
+	/// <summary>
+	/// Called when Game Manager has spawned all the players.
+	/// </summary>
+	private void HandleGameStarted()
+	{
+		musicGame.Play();
 	}
 
 	/// <summary>
@@ -68,12 +115,12 @@ public class AudioManager : MonoBehaviour
 	{
 		if (p_active)
 		{
-			music.SetParameter("vaporwave", 1f);
+			musicGame.SetParameter("vaporwave", 1f);
 			snap_inPauseMenu.Play();
 		}
 		else
 		{
-			music.SetParameter("vaporwave", 0f);
+			musicGame.SetParameter("vaporwave", 0f);
 			snap_inPauseMenu.Stop();
 		}
 	}
@@ -116,6 +163,6 @@ public class AudioManager : MonoBehaviour
 	{
 		//Reset Pause-/GameOver-menu snapshot for audio when loading a new/the same Scene.
 		LowerVolumeInPauseMenu(false);
-		music.Stop();
+		musicGame.Stop();
 	}
 }

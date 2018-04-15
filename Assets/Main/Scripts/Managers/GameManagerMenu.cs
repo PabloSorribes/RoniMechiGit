@@ -16,7 +16,6 @@ public class GameManagerMenu : MonoBehaviour
 
 	//Singleton
 	private static GameManagerMenu instance;
-
 	public static GameManagerMenu GetInstance()
 	{
 		return instance;
@@ -41,6 +40,7 @@ public class GameManagerMenu : MonoBehaviour
 		gsManager = GameStateManager.GetInstance();
 		gameManager = GameManager.GetInstance();
 
+		//If not in Menu, destroy thyself
 		if (gsManager.currentGameState == GameStateManager.GameState.inGame)
 		{
 			Destroy(this);
@@ -51,7 +51,7 @@ public class GameManagerMenu : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Intended for adding ONE player on Start in the Menu.
+	/// Intended for adding ONE player on Start in the Menu. Adds as many as indicated by the Enum "AmountOfPlayersToSpawn"
 	/// </summary>
 	private void SpawnPlayersOnStart()
 	{
@@ -84,31 +84,29 @@ public class GameManagerMenu : MonoBehaviour
 	private void GetPlayerInputAssignment()
 	{
 		//Spawn new player in menu
-		if (Input.GetButtonDown("Jump_P1") || Input.GetKeyDown(KeyCode.Keypad1))
+		if (Input.GetButtonDown(_Inputs.jumpButton + "_P1") || Input.GetKeyDown(KeyCode.Keypad1))
 			AddPlayer(0);
-		if (Input.GetButtonDown("Jump_P2") || Input.GetKeyDown(KeyCode.Keypad2))
+		if (Input.GetButtonDown(_Inputs.jumpButton + "_P2") || Input.GetKeyDown(KeyCode.Keypad2))
 			AddPlayer(1);
-		if (Input.GetButtonDown("Jump_P3") || Input.GetKeyDown(KeyCode.Keypad3))
+		if (Input.GetButtonDown(_Inputs.jumpButton + "_P3") || Input.GetKeyDown(KeyCode.Keypad3))
 			AddPlayer(2);
-		if (Input.GetButtonDown("Jump_P4") || Input.GetKeyDown(KeyCode.Keypad4))
+		if (Input.GetButtonDown(_Inputs.jumpButton + "_P4") || Input.GetKeyDown(KeyCode.Keypad4))
 			AddPlayer(3);
 
+		//REASON OF REMOVAL: Not done enough for Release.
 		//Despawn a player in menu
-		if (Input.GetButtonDown("Deflect_P1") || Input.GetKeyDown(KeyCode.Alpha1))
-			RemovePlayer(0);
-		if (Input.GetButtonDown("Deflect_P2") || Input.GetKeyDown(KeyCode.Alpha2))
-			RemovePlayer(1);
-		if (Input.GetButtonDown("Deflect_P3") || Input.GetKeyDown(KeyCode.Alpha3))
-			RemovePlayer(2);
-		if (Input.GetButtonDown("Deflect_P4") || Input.GetKeyDown(KeyCode.Alpha4))
-			RemovePlayer(3);
+		//if (Input.GetButtonDown(_Inputs.deflectionButton + "_P1") || Input.GetKeyDown(KeyCode.Alpha1))
+		//	RemovePlayer(0);
+		//if (Input.GetButtonDown(_Inputs.deflectionButton + "_P2") || Input.GetKeyDown(KeyCode.Alpha2))
+		//	RemovePlayer(1);
+		//if (Input.GetButtonDown(_Inputs.deflectionButton + "_P3") || Input.GetKeyDown(KeyCode.Alpha3))
+		//	RemovePlayer(2);
+		//if (Input.GetButtonDown(_Inputs.deflectionButton + "_P4") || Input.GetKeyDown(KeyCode.Alpha4))
+		//	RemovePlayer(3);
 	}
 
 	private void AddPlayer(int p_index)
 	{
-		//if () {
-		//}
-
 		//TODO: Make this operation unique for each player.
 		if (counter == 0)
 		{
