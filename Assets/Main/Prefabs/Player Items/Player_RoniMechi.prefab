@@ -1672,6 +1672,7 @@ MonoBehaviour:
   currentStatePlayer: 0
   canMove: 1
   theBodyColor: {fileID: 137461449261069060}
+  deflectionSphereColor: {fileID: 23680244139425018}
   moveSpeed: 5
   moveSpeedAirborne: 4
   jumpVelocity: 15

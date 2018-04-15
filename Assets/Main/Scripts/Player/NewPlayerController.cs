@@ -18,6 +18,7 @@ public class NewPlayerController : MonoBehaviour
 	public bool canMove = true;
 	internal bool isGrounded;
 	public Renderer theBodyColor;
+	public Renderer deflectionSphereColor;
 
 	[Header("--- MOVEMENT ---")]
 	public float moveSpeed;
@@ -99,6 +100,7 @@ public class NewPlayerController : MonoBehaviour
 
 		theBodyColor.materials[1].color = _color;
 		theBodyColor.materials[4].color = _color;
+		deflectionSphereColor.materials[0].color = _color;
 	}
 
 	private void InitializeSounds()
