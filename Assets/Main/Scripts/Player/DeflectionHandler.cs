@@ -24,6 +24,29 @@ public class DeflectionHandler : MonoBehaviour
 
 	public System.Action OnActivateShield;
 
+	private bool CanDeflect
+	{
+		get
+		{
+			bool canDeflect;
+			if (deflectionCounter >= deflectionCooldown)
+				canDeflect = true;
+			else
+				canDeflect = false;
+
+			return canDeflect;
+		}
+	}
+
+	private string DeflectionButton
+	{
+		get
+		{
+			string deflectionButton = _Inputs.deflectionButton + playerController.currentPlayer;
+			return deflectionButton;
+		}
+	}
+
 	// Use this for initialization
 	private void Start()
 	{
@@ -62,7 +85,7 @@ public class DeflectionHandler : MonoBehaviour
 		deflectionCounter += Time.deltaTime;
 
 		//Activate deflection shield.
-		if (CrossPlatformInputManager.GetButtonDown(_Inputs.deflectionButton + playerController.currentPlayer) || Input.GetKeyDown(KeyCode.F))
+		if (CrossPlatformInputManager.GetButtonDown(DeflectionButton) || Input.GetKeyDown(KeyCode.F))
 		{
 			//Check if you can activate the shield or not.
 			if (CanDeflect)
@@ -73,20 +96,6 @@ public class DeflectionHandler : MonoBehaviour
 
 				ShowDeflectionSphere();
 			}
-		}
-	}
-
-	private bool CanDeflect
-	{
-		get
-		{
-			bool canDeflect;
-			if (deflectionCounter >= deflectionCooldown)
-				canDeflect = true;
-			else
-				canDeflect = false;
-
-			return canDeflect;
 		}
 	}
 
