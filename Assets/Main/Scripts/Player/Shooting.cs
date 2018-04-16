@@ -30,7 +30,7 @@ public class Shooting : MonoBehaviour
 
 	[Header("--- RECOIL/PUSHBACK ---")]
 	public bool useRecoil = true;
-	public float pushbackMultiplierGrounded = 2500;
+	public float pushbackMultiplierGrounded = 350;
 	public float pushbackMultiplierAirborne = 500;
 	public float extraPushbackWhenFalling = 500;
 
