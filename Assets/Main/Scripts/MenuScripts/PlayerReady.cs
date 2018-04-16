@@ -33,21 +33,26 @@ public class PlayerReady : MonoBehaviour
 	{
 		if (other.tag == _Tags.player)
 		{
-			//Is the button is "unready", set it to "ready"
-			if (GetComponent<Animator>().GetBool("ReadyUnready") == false)
+			//Check if there's more than one player active. If yes, do animations an so on.
+			if (GameManager.GetInstance().playerHandlers.Count > 1)
 			{
-				GetComponent<Animator>().SetBool("ReadyUnready", true);
-				menuManager.anim.SetTrigger(animationToRun);
+				//If the button is "unready", set it to "ready"
+				if (GetComponent<Animator>().GetBool("ReadyUnready") == false)
+				{
+					GetComponent<Animator>().SetBool("ReadyUnready", true);
+					menuManager.anim.SetTrigger(animationToRun);
 
-				a_forwardButtonSound.Play();
+					a_forwardButtonSound.Play();
 
-				Invoke("TeleportPlayer", 1);
-				Invoke("BecomeUnreadyAfterTime", 4);
+					Invoke("TeleportPlayer", 1);
+					Invoke("BecomeUnreadyAfterTime", 2.5f);
+				}
+				else
+				{
+					GetComponent<Animator>().SetBool("ReadyUnready", false);
+				}
 			}
-			else
-			{
-				GetComponent<Animator>().SetBool("ReadyUnready", false);
-			}
+
 		}
 	}
 
