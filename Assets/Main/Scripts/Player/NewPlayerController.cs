@@ -365,7 +365,7 @@ public class NewPlayerController : MonoBehaviour
 
 			isGrounded = true;
 		}
-		else if (p_other.transform.tag == _Tags.menuPlatforms)
+		else if (p_other.transform.tag == _Tags.menuPlatforms || p_other.transform.tag == _Tags.player)
 		{
 			isGrounded = true;
 		}
