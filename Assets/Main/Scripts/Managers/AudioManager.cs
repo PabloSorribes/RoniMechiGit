@@ -1,5 +1,4 @@
-﻿using System;
-using FMODUnity;
+﻿using FMODUnity;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -25,7 +24,15 @@ public class AudioManager : MonoBehaviour
 
 	private void Awake()
 	{
-		instance = this;
+		//- Only keep one instance of this object in the game.
+		if (instance == null)
+		{
+			instance = this;
+		}
+		else if (FindObjectOfType<AudioManager>().gameObject != this.gameObject)
+		{
+			Destroy(FindObjectOfType<AudioManager>().gameObject);
+		}
 	}
 
 	// Use this for initialization
@@ -35,34 +42,16 @@ public class AudioManager : MonoBehaviour
 		Application.runInBackground = true;
 
 		gsManager = GameStateManager.GetInstance();
-		GameStateManager.OnGameStateChanged += HandleGameStateChanged;
 
-		GameManager.OnGameStarted += HandleGameStarted;
+		GameManager.GetInstance().OnGameStarted += HandleGameStarted;
 
 		//Initialize the bus.
 		masterBus = FMODUnity.RuntimeManager.GetBus(masterBusString);
 
 		InitializeAudio();
 
+		//Invoke("ChooseLevelMusic", 0.2f);
 		ChooseLevelMusic();
-	}
-
-	private void HandleGameStateChanged(GameStateManager.GameState obj)
-	{
-		switch (obj)
-		{
-			case GameStateManager.GameState.inMenu:
-				break;
-			case GameStateManager.GameState.inGame:
-				break;
-			case GameStateManager.GameState.inPauseMenu:
-				break;
-			case GameStateManager.GameState.gameOver:
-				break;
-			default:
-				break;
-		}
-
 	}
 
 	private void InitializeAudio()
@@ -89,8 +78,8 @@ public class AudioManager : MonoBehaviour
 		if (gsManager.currentGameState == GameStateManager.GameState.inMenu)
 		{
 			ambience.Stop();
-			musicGame.Stop();
 			musicMenu.Play();
+			musicGame.Stop();
 		}
 		else if (gsManager.currentGameState == GameStateManager.GameState.inGame)
 		{
@@ -102,9 +91,12 @@ public class AudioManager : MonoBehaviour
 	/// <summary>
 	/// Called when Game Manager has spawned all the players.
 	/// </summary>
-	private void HandleGameStarted()
+	public void HandleGameStarted()
 	{
-		musicGame.Play();
+		if (!musicGame.IsPlaying())
+		{
+			musicGame.Play();
+		}
 	}
 
 	/// <summary>
@@ -164,5 +156,7 @@ public class AudioManager : MonoBehaviour
 		//Reset Pause-/GameOver-menu snapshot for audio when loading a new/the same Scene.
 		LowerVolumeInPauseMenu(false);
 		musicGame.Stop();
+		musicMenu.Stop();
+		ambience.Stop();
 	}
 }

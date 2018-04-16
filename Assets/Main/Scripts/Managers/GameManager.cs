@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
 
 	private bool gameStarted;
 
-	public static System.Action OnGameStarted;
+	public System.Action OnGameStarted;
 
 	//Singleton
 	private static GameManager instance;
@@ -66,13 +66,13 @@ public class GameManager : MonoBehaviour
 	private IEnumerator StartGameAfterTime(float secondsToWait)
 	{
 		yield return new WaitForSeconds(secondsToWait);
+		yield return new WaitForEndOfFrame();
 		StartGame();
 	}
 
 	private void StartGame()
 	{
 		OnGameStarted();
-
 		//Add players depending on how many have joined
 		//foreach (var p_index in gsManager.joinedPlayersInt) {
 		//	AddPlayerHandler(p_index);
