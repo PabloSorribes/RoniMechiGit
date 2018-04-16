@@ -1721,7 +1721,7 @@ MonoBehaviour:
   crosshair: {fileID: 1826672588066654}
   shootingState: 0
   useRecoil: 1
-  pushbackMultiplierGrounded: 250
+  pushbackMultiplierGrounded: 350
   pushbackMultiplierAirborne: 500
   extraPushbackWhenFalling: 500
 --- !u!114 &114721754091441542
